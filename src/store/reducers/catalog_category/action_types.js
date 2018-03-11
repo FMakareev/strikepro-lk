@@ -1,0 +1,5 @@
+export const CHANGE_TREE = 'CHANGE_TREE';
+
+export const GET_CATEGORY_LOAD      = 'GET_CATEGORY_LOAD';
+export const GET_CATEGORY_SUCCESS   = 'GET_CATEGORY_SUCCESS';
+export const GET_CATEGORY_ERROR     = 'GET_CATEGORY_ERROR';

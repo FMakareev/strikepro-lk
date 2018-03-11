@@ -1,0 +1,1 @@
+export const AUTH_VALID_FAIL = 'AUTH_VALID_FAIL';

@@ -1,0 +1,175 @@
+{
+  "form_type": "individual_entrepreneur",
+  "company": {
+    "name": "aasfa",
+    "inn": "sfaet46466436346346346346",
+    "site": "http://asdasd.com",
+    "comment": " asfasfasfasfasfsafafaasfasfasfasfasfsafafaasfasfasfasfasfsafafaasfasfasfasfasfsafafa",
+    "address": [
+      {
+        "fias_id": "44",
+        "type": "legal"
+      },
+      {
+        "fias_id": "44",
+        "type": "actual"
+      }
+    ],
+    "contacts": [
+      {
+        "value": "email@email.com",
+        "type": "email",
+        "subscription": false,
+        "is_main": true
+      },
+      {
+        "value": "email@email.com",
+        "type": "email",
+        "subscription": true,
+        "is_main": false
+      },
+      {
+        "value": "email@email.com",
+        "type": "email",
+        "subscription": false,
+        "is_main": false
+      },
+      {
+        "value": "000000000",
+        "type": "phone",
+        "subscription": false,
+        "is_main": false
+      },
+      {
+        "value": "000000000",
+        "type": "phone",
+        "subscription": false,
+        "is_main": true
+      },
+      {
+        "value": "000000000",
+        "type": "phone",
+        "subscription": false,
+        "is_main": false
+      }
+    ],
+    "user": {
+      "email": "email@email.com",
+      "phone": "000000000",
+      "password": "qwerty",
+      "password_confirmation": "qwerty",
+      "surename": "asdasd",
+      "firstname": "asdasd",
+      "patronymic": "asdddddddddd"
+    },
+    "persons": [
+      {
+        "roles_id": "1",
+        "role_name": "Assumenda in.",
+        "surename": "Имя",
+        "firstname": "asdlk",
+        "patronymic": "Отчество",
+        "contacts": [
+          {
+            "value": "0009090909",
+            "type": "phone"
+          },
+          {
+            "value": "email@email.com",
+            "type": "email",
+            "subscription": false
+          }
+        ]
+      },
+      {
+        "roles_id": "2",
+        "role_name": "Perferendis.",
+        "surename": "Имя",
+        "firstname": "Фамилия",
+        "patronymic": "Отчество",
+        "contacts": [
+          {
+            "value": "000000000",
+            "type": "phone"
+          },
+          {
+            "value": "email@email.com",
+            "type": "email",
+            "subscription": false
+          }
+        ]
+      },
+      {
+        "roles_id": "3",
+        "role_name": "Veritatis.",
+        "surename": "Имя",
+        "firstname": "Фамилия",
+        "patronymic": "Отчество",
+        "contacts": [
+          {
+            "value": "000000000",
+            "type": "phone"
+          },
+          {
+            "value": "email@email.com",
+            "type": "email",
+            "subscription": false
+          }
+        ]
+      },
+      {
+        "roles_id": "4",
+        "role_name": "Tenetur.",
+        "surename": "Имя",
+        "firstname": "Фамилия",
+        "patronymic": "Отчество",
+        "contacts": [
+          {
+            "value": "00000000",
+            "type": "phone"
+          },
+          {
+            "value": "email@email.com",
+            "type": "email",
+            "subscription": false
+          }
+        ]
+      },
+      {
+        "roles_id": "5",
+        "role_name": "Aut voluptatem.",
+        "surename": "Имя",
+        "firstname": "Фамилия",
+        "patronymic": "Отчество",
+        "contacts": [
+          {
+            "value": "00000000",
+            "type": "phone"
+          },
+          {
+            "value": "email@email.com",
+            "type": "email",
+            "subscription": false
+          }
+        ]
+      }
+    ],
+    "activities": [],
+    "carrier": {
+      "carrier_id": "1",
+      "name": "Possimus fugit vero.",
+//      "conditions": [
+//        {
+//          "id": "1"
+//        },
+//        {
+//          "id": "2"
+//        },
+//        {
+//          "id": "5"
+//        }
+//      ],
+      "comment": "КомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарийКомментарий"
+    }
+  }
+}

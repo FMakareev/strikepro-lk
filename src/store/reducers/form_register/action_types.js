@@ -1,0 +1,1 @@
+export const SERVER_VALID_FAIL = 'SERVER_VALID_FAIL'

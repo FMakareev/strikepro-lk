@@ -1,0 +1,32 @@
+.modal-backdrop.fade{
+    opacity: 0.5;
+}
+.show{
+    opacity: 1;
+}
+
+.modal.fade .modal-dialog{
+    transform: translate(0, 0);
+}
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+.modal-header:after{
+    content: none;
+}
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
