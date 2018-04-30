@@ -3,6 +3,7 @@ import {reducer as formReducer} from 'redux-form';
 
 import {catalog_products} from './catalog_products/reducer';
 import {catalog_category} from './catalog_category/reducer';
+import {shopping_cart} from './shopping_cart/reducer';
 
 import {order} from './order/reducer';
 import {auth} from './auth/reducer';
@@ -15,6 +16,7 @@ export default combineReducers({
     }),
     catalog_products,
     catalog_category,
+    shopping_cart,
     order,
     auth,
     user,

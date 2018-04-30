@@ -22,6 +22,8 @@ export const order = (state = {}, action) => {
             return action.payload
         }
 
+
+
         case CREATE_ORDER_LOAD: {
             console.log(CREATE_ORDER_LOAD, action);
             return Object.assign({}, state, {

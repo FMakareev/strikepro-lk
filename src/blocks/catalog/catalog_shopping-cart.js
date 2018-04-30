@@ -10,63 +10,37 @@ import {Store} from '../../store/store';
 //     }
 // }
 //
-// @connect(
-//     state => ({ // получаем данные из store
-//         order: state.order,
-//         products: state.order.products,
-//     }), //
-//     dispatch => ({
-//         setStore: (type, value) => {
-//             dispatch({type: type, payload: value})
-//         }
-//     })
-// )
+@connect(
+    state => ({ // получаем данные из store
+        shopping_cart: state.shopping_cart,
+    }), //
+    dispatch => ({
+        setStore: (type, value) => {
+            dispatch({type: type, payload: value})
+        }
+    })
+)
 export class CatalogShoppingCart extends Component {
 
     constructor(props) {
         super(props);
         this.state = this.initialState;
-        // this.shoppingCartUpdate = this.shoppingCartUpdate.bind(this);
-        // this.onOpenBasket       = this.onOpenBasket.bind(this);
+
     }
 
     get initialState() {
-        return {
-            sum: 0,
-            count: 0,
-            isOpenBasket: false
-        }
-    }
-
-    componentDidMount() {
-        // Store.subscribe(() => {
-        //     this.shoppingCartUpdate();
-        // })
-    }
-
-    shoppingCartUpdate() {
-        const {products} = this.props;
-        let sum = 0;
-        let count = 0;
-        products && products.map(item => {
-            sum = (parseFloat(sum) + parseFloat(item.sum)).toFixed(2);
-            count = parseInt(count) + parseInt(item.count);
-        });
-        this.setState({sum, count});
-    }
-
-    onOpenBasket() {
-
+        return {}
     }
 
     render() {
-        const {count, sum,isOpenBasket} = this.state;
-        const {products} = this.props;
-        console.log(this.props);
+        const {shopping_cart:{order,load,error,success}} = this.props;
+
+        if(!order) return null;
+        // if(!success) return null;
         return (<div className="panel shopping-cart__wrap">
             <a title="Перейти в корзину" className="shopping-cart__desc">
                 <strong>Корзина:</strong>
-                {count} / {sum}
+                {order.count} / {order.sum}
             </a>
         </div>)
         // return (

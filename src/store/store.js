@@ -28,8 +28,8 @@ const Store = createStoreMiddleware(
     composeWithDevTools(),
 );
 
-Store.subscribe(()=>{
-    sessionStorage.setItem('StrikeProReduxStore', JSON.stringify(Store.getState()))
-});
+// Store.subscribe(()=>{
+//     sessionStorage.setItem('StrikeProReduxStore', JSON.stringify(Store.getState()))
+// });
 
 export {Store};

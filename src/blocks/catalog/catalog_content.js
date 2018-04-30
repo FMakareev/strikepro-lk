@@ -59,7 +59,10 @@ export class CatalogContent extends Component {
                     }
                     {
                         products && products.map((item, index) => {
-                            return <CatalogProductRow key={index} product={item}/>
+                            return <CatalogProductRow
+                                key={index}
+                                product={item}
+                            />
                         })
                     }
                     </tbody>

@@ -5,6 +5,7 @@ import {
 import normalize from 'json-api-normalize';
 import {is_fetch} from "../../../utils/fetch";
 import {ORDER_CHANGE_PRODUCT} from "../order/action_types";
+import {Store} from '../../store';
 
 export const getProducts = (url) => {
 
@@ -69,8 +70,23 @@ const transformProducts = (products) => {
         'price.price_type',
         'price.price',
         'logo',
-        'logo.thumb_url'
+        'logo.thumb_url',
+        'count'
     ]);
-    console.log('newProducts',newProducts);
+    if (Store.getState().shopping_cart.order.products.length) {
+        let shopping_cart = Store.getState().shopping_cart.order.products;
+        newProducts.map(item => {
+            let shopping_cart_product = shopping_cart.find((obj) => obj.id === item.id);
+            if (shopping_cart_product) {
+                item.count = shopping_cart_product.count;
+            } else {
+                item.count = 0;
+            }
+        })
+    } else {
+        newProducts.map(item => item.count = 0);
+    }
+
+
     return newProducts
 }

@@ -5,8 +5,10 @@ import './catalog.css';
 // import {CatalogFilter} from "../../blocks/catalog/catalog_filter";
 import {CatalogSidebar} from "../../blocks/catalog/catalog_sidebar";
 import {CatalogContent} from "../../blocks/catalog/catalog_content";
-// import {CatalogShoppingCart} from "../../blocks/catalog/catalog_shopping-cart";
+import {CatalogShoppingCart} from "../../blocks/catalog/catalog_shopping-cart";
 import {connect} from "react-redux";
+import {Store} from '../../store/store';
+import {initShoppingCart} from "../../store/reducers/shopping_cart/actions";
 
 export class Catalog extends Component {
 
@@ -20,6 +22,10 @@ export class Catalog extends Component {
     }
     componentWillMount(){
 
+    }
+    componentDidMount(){
+
+        Store.dispatch(initShoppingCart());
     }
 
     render() {
@@ -35,7 +41,7 @@ export class Catalog extends Component {
                     <div className="catalog_content">
                         <div className="panel panel-default">
                             <CatalogContent/>
-                            {/*<CatalogShoppingCart/>*/}
+                            <CatalogShoppingCart/>
                         </div>
                     </div>
                 </div>

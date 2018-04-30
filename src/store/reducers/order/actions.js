@@ -24,7 +24,7 @@ export const ActionChangeProduct = (state, product, count) => {
     state.order.products.map((item) => {
         if (item.id === product.id) {
             searchResult = ++searchResult;
-            if(count > 0) {
+            if (count > 0) {
                 item.count = count;
                 item.sum = (count * product.price.price).toFixed(2);
                 item.id = product.id;
@@ -53,7 +53,6 @@ export const ActionChangeProduct = (state, product, count) => {
 };
 
 
-
 export const actionSaveProduct = (data) => {
 
     return {
@@ -63,9 +62,23 @@ export const actionSaveProduct = (data) => {
 };
 
 
-const addProduct = (state, product, count) => {
+export const addProduct = (state, product, count) => {
     return (dispatch) => {
+        console.log('addProduct:', state, product, count);
 
+        console.log(state.catalog_products.products);
+
+        state.order.products.map((item) => {
+
+        });
+
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+
+                resolve(true)
+            }, 5000)
+        })
     }
 };
 
@@ -84,7 +97,7 @@ const createOrder = () => {
         });
 
         return new Promise((resolve, reject) => {
-            setTimeout(() =>{
+            setTimeout(() => {
                 dispatch({
                     type: CREATE_ORDER_SUCCESS,
                     payload: true

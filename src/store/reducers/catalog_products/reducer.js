@@ -4,6 +4,7 @@ import {
     GET_PRODUCTS_LOAD,
     GET_PRODUCTS_SUCCESS,
     GET_PRODUCTS_ERROR,
+    UPDATE_PRODUCT,
 } from "./action_type";
 
 export const catalog_products = (state = {}, action) => {
@@ -21,6 +22,11 @@ export const catalog_products = (state = {}, action) => {
             return Object.assign({}, state, {
                 products: action.payload
             })
+        }
+        case UPDATE_PRODUCT: {
+            console.log(UPDATE_PRODUCT, action);
+
+            return action.payload
         }
         case GET_PRODUCTS_LOAD: {
             console.log(GET_PRODUCTS_LOAD, action);
