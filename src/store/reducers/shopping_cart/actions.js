@@ -101,7 +101,7 @@ export const updateProduct = (state, product, count) => {
                         payload: catalog_products
                     });
                     resolve(true)
-                }, 1000)
+                }, 10)
             })
             // }
 
