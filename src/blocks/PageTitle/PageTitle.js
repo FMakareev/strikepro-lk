@@ -1,16 +1,13 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-class PageTitle extends Component {
+export class PageTitle extends PureComponent {
 
-    constructor(props) {
-        super(props);
-        this.state = this.initialState;
+    static propTypes = {
+        children: PropTypes.element,
     }
 
-    get initialState() {
-        return {}
-    }
+    static defaultProps = {}
 
     render() {
         return (
@@ -27,8 +24,4 @@ class PageTitle extends Component {
     }
 }
 
-PageTitle.propTypes = {};
-
-PageTitle.defaultProps = {};
-
-export {PageTitle};
+export default PageTitle;

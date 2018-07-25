@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {PageTitle} from "../../blocks/page-title/page-title";
+import {PageTitle} from "../../blocks/PageTitle/PageTitle";
 import './catalog.css';
 // import {CatalogFilter} from "../../blocks/catalog/catalog_filter";
 import {CatalogSidebar} from "../../blocks/catalog/catalog_sidebar";

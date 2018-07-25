@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavSidebar} from "../blocks/nav/nav_sidebar";
+import {NavSidebar} from "../blocks/NavSidebar/NavSidebar";
 import {Header} from "../blocks/header/header";
 
 class LayoutMain extends Component {

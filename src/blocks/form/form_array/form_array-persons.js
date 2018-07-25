@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, FieldArray, formValueSelector} from 'redux-form'
 import {connect} from 'react-redux'
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {CardBody, CardHeader, Col, Row} from "reactstrap";
 import {FormArrayPersonsContacts} from "./form_array-persons-contacts";
 import {Preloader} from "../../preloader/preloader";
@@ -160,7 +160,7 @@ export class FormArrayPersons extends Component {
         //                 return ( <div key={index}>
         //                     <Field
         //                         name={`persons[${index}].roles_id`}
-        //                         component="input"
+        //                         component="Input"
         //                         type="hidden"
         //                         onChange={()=> {
         //                             return item.id
@@ -169,7 +169,7 @@ export class FormArrayPersons extends Component {
         //                     />
         //                     <Field
         //                         name={`persons[${index}].role_name"`}
-        //                         component="input"
+        //                         component="Input"
         //                         type="hidden"
         //                         defaultValue={item.attributes.name}
         //                     />

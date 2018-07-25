@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Alert, Button, Col, ModalBody, ModalFooter, Row} from "reactstrap";
 import {Field, reduxForm} from "redux-form";
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {required} from "../form_register/form_registration-validate";
 import {SelectDefault} from "../../select/select_default";
 

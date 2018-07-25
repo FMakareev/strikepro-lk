@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button} from "reactstrap";
 import {Link} from "react-router-dom";
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {Field, getFormValues, reduxForm} from "redux-form";
 import {isEmail, maxLength255, maxLength32, minLength6, required} from "../form_register/form_registration-validate";
 import {config} from "../../../config";

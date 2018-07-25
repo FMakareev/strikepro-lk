@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field} from 'redux-form'
-import {InputText} from "../../input/input_text/input_text";
-import {InputCheckbox} from "../../input/input_checkbox/input_checkbox";
+import {InputText} from "../../Input/InputText/InputText";
+import {InputCheckbox} from "../../Input/InputCheckbox/InputCheckbox";
 import {isEmail, maxLength255, required} from "../form_register/form_registration-validate"; // ES6
 
 // TODO: отрефакторить CSS

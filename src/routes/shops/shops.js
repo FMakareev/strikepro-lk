@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {StoreItem} from "../../blocks/store/store_item";
-import {PageTitle} from "../../blocks/page-title/page-title";
+import {PageTitle} from "../../blocks/PageTitle/PageTitle";
 import {StoreEdit} from "../../blocks/store/store_edit";
 
 const store = [

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 
 import {CardBody, Col, Row} from "reactstrap";
-import {InputCheckboxGroup} from "../../input/input_checkbox-group/input_checkbox-group";
+import {InputCheckboxGroup} from "../../Input/InputCheckboxGroup/InputCheckboxGroup";
 import {config} from "../../../config";
 import {Preloader} from "../../preloader/preloader";
 import {Field} from "redux-form";

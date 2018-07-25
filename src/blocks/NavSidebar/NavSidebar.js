@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {NavItem} from "./nav_item";
+import {NavItem} from "../NavItem/NavItem";
 import {Link, Redirect} from "react-router-dom";
 import {ModalFeedback} from "../modal/modal_feedback";
 import {BrowserHistory} from "../../history";
 
-class NavSidebar extends Component {
+export class NavSidebar extends Component {
+
+    static propTypes = {};
+    static defaultProps = {};
 
     constructor(props) {
         super(props);
@@ -109,8 +112,5 @@ class NavSidebar extends Component {
     }
 }
 
-NavSidebar.propTypes = {};
 
-NavSidebar.defaultProps = {};
-
-export {NavSidebar};
+export default NavSidebar;

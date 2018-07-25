@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Field, FormSection, reduxForm, formValueSelector, FieldArray} from "redux-form";
 import {Alert, Button, Col, ModalBody, ModalFooter, Row} from "reactstrap";
-import {InputText} from "../input/input_text/input_text";
+import {InputText} from "../Input/InputText/InputText";
 import {maxLength255, required} from "./form_register/form_registration-validate";
 import {WorkingHoursItem} from "./form_array/form_array-working-hours";
 

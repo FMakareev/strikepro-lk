@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Field} from 'redux-form'
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {FormGroup, Input, Label, Alert} from "reactstrap";
 import {maxLength255, required} from "../form_register/form_registration-validate"; // ES6
 

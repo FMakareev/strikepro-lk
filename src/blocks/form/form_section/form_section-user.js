@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {FormSection} from "redux-form";
 import {CardBody, Col, Row} from "reactstrap";
 import Field from "redux-form/es/Field";

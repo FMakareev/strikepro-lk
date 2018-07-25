@@ -2,8 +2,8 @@ import React from 'react';
 
 import {CardBody, Col, Row} from "reactstrap";
 import {Field, FieldArray} from "redux-form";
-import {InputText} from "../../input/input_text/input_text";
-import {InputCheckbox} from "../../input/input_checkbox/input_checkbox";
+import {InputText} from "../../Input/InputText/InputText";
+import {InputCheckbox} from "../../Input/InputCheckbox/InputCheckbox";
 import {FormSectionAddress} from "./form_section-address";
 
 import {

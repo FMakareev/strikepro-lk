@@ -1,7 +1,7 @@
 // form_section-carrier
 
 import React,{Component} from 'react';
-import {InputText} from "../../input/input_text/input_text";
+import {InputText} from "../../Input/InputText/InputText";
 import {FieldArray, FormSection} from "redux-form";
 import {CardBody, Col, Row} from "reactstrap";
 import Field from "redux-form/es/Field";
@@ -9,7 +9,7 @@ import {SelectAsyncAutocomplete} from "../../select/select_async-autocomplete";
 
 import {config} from "../../../config"
 import {Preloader} from "../../preloader/preloader";
-import {InputCheckboxGroup} from "../../input/input_checkbox-group/input_checkbox-group";
+import {InputCheckboxGroup} from "../../Input/InputCheckboxGroup/InputCheckboxGroup";
 import {required} from "../form_register/form_registration-validate";
 
 
