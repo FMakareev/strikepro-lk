@@ -32,7 +32,7 @@ const renderSubFields = (member, index, fields) => {
                         marginTop: '31.5px'
                     }}
                     className="btn btn-danger" onClick={() => fields.remove(index)}>
-                    <i className="fa fa-trash-o"></i>
+                    <i className="fa fa-trash-o"/>
                 </button>
             </div>
             <Field

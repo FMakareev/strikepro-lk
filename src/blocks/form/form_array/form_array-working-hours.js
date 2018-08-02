@@ -111,10 +111,12 @@ class WorkingHours extends Component {
 const WorkingHoursRow = (member, index, fields) => {
     return (
         <div className="row" key={index}>
-            <div className="col-md-2">
-                {daysOfTheWeek[index]}
+            <div className="col-md-12">
+                <label>
+                    {daysOfTheWeek[index]}
+                </label>
             </div>
-            <div className="col-md-5">
+            <div className="col-md-6">
                 <Field
                     name={`${member}.from`}
                     component={WorkingHours}
@@ -123,7 +125,7 @@ const WorkingHoursRow = (member, index, fields) => {
                     validate={[required]}
                 />
             </div>
-            <div className="col-md-5">
+            <div className="col-md-6">
                 <Field
                     name={`${member}.to`}
                     component={WorkingHours}

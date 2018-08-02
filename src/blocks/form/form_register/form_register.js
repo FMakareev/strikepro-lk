@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, CardFooter, CardHeader, Col, Row} from "reactstrap";
 import {Field, FormSection, reduxForm, formValueSelector, SubmissionError, getFormValues} from "redux-form";
+import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
 
 import {FormSectionUser} from "../form_section/form_section-user";
 import {FormSectionActivities} from "../form_section/form_section-activities";
@@ -10,9 +11,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import {ServerValidError} from "../../../store/reducers/form_register/actions";
 
-// TODO: допилить отправку данных на сервак
-// TODO: Тестировать
-// TODO: на будующее запилить компонент stepper
+import {CreateUserAction, isCreateUser} from '../../../store/reduxRestEasy/register'
 
 function mapStateToProps(state) {
     return {
@@ -21,88 +20,58 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        ServerValidError: bindActionCreators(ServerValidError, dispatch),
-    }
-}
-
-function mergeProps({FormState,values}, dispatchProps, ownProps) {
-    // console.log(FormState,values, dispatchProps, ownProps);
-
-    return Object.assign({}, ownProps, {
-        FormState,
-        values,
-        ServerValidError: (value) => dispatchProps.ServerValidError(FormState, value),
-    });
-}
 
 @reduxForm({
     form: 'FormRegister',
 })
-@connect(mapStateToProps, mapDispatchToProps, mergeProps)
+@connectRestEasy(
+    (state, ownProps) => ({
+        isCreateUser: isCreateUser(state, ownProps),
+    }),
+    dispatch => ({
+        CreateUserAction: body => dispatch(CreateUserAction({body})),
+    })
+)
+@connect(mapStateToProps)
 export class FormRegister extends Component {
 
-    static FROM_TYPE_LEGAL_ENTITY = 'legal_entity';
-    static FORM_TYPE_INDIVIDUAL_ENTREPRENEUR = 'individual_entrepreneur';
-    static FROM_TYPE_LEGAL_ENTITY_NOT_RF = 'legal_entity_not_rf';
+    FROM_TYPE_LEGAL_ENTITY = 'legal_entity';
+    FORM_TYPE_INDIVIDUAL_ENTREPRENEUR = 'individual_entrepreneur';
+    FROM_TYPE_LEGAL_ENTITY_NOT_RF = 'legal_entity_not_rf';
 
     constructor(props) {
         super(props);
         this.state = this.initialState;
         this.onSubmit = this.onSubmit.bind(this);
-        this.onServerValidError = this.onServerValidError.bind(this);
     }
 
     get initialState() {
         return {}
     }
 
-    async onServerValidError(promis) {
-        const data = await promis
-            .then((respons) => {
-                return respons.json();
+    onSubmit(values) {
+        console.log(values);
 
-            }) .then((respons) => {
-                return respons;
-            });
-        this.props.ServerValidError(data);
-
-    }
-
-    async onSubmit(val) {
-        console.log(val);
-
-
-        let values = JSON.parse(JSON.stringify(val));
-        // values.company.contacts = [...values.company.email, ...values.company.phone];
-        // delete values.company.email;
-        // delete values.company.phone;
-        //
-        const data = await fetch('http://alex.taran.ru/api/v1/auth/register', {
-            method: 'POST',
-            credentials: 'include',
-            cache: 'no-cache',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(values),
-        }).then(response => {
-            console.log(response);
-            if (response.status >= 200 && response.status < 300) {
-                return Promise.resolve(response);
-            } else if (response.status === 422) {
-                this.onServerValidError(Promise.resolve(response));
-            }
-            return Promise.reject(response);
-        })
+        return new Promise((resolve, reject) =>
+            this.props.CreateUserAction(values)
+                .then(response => {
+                    console.log(response);
+                    if (response.status >= 200 && response.status < 300) {
+                        resolve(response);
+                    } else if (response.status === 422) {
+                        return Promise.reject(response);
+                    }
+                    return Promise.reject(response);
+                }).catch(error => {
+                console.log(error.error.message);
+                reject(new SubmissionError({_error: error.error.message}));
+            }))
 
     }
 
     render() {
         const {error, handleSubmit, pristine, reset, submitting, roles, type} = this.props;
-        // console.log(this.props);
+        console.log(this.props);
         return (
             <form style={{
                 maxWidth: '768px',

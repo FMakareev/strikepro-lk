@@ -1,15 +1,31 @@
-import React,{Component} from 'react';
-
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
+import {Field} from "redux-form";
 import {CardBody, Col, Row} from "reactstrap";
 import {InputCheckboxGroup} from "../../Input/InputCheckboxGroup/InputCheckboxGroup";
 import {config} from "../../../config";
 import {Preloader} from "../../preloader/preloader";
-import {Field} from "redux-form";
 import {required} from "../form_register/form_registration-validate";
 
+import {CarrierOptionsAction, getCarrierOptions, isCarrierOptions} from '../../../store/reduxRestEasy/Carrier';
 
-
+@connectRestEasy(
+    (state, ownProps) => ({
+        isOptions: isCarrierOptions(state, ownProps),
+        options: getCarrierOptions(state),
+    }),
+    dispatch => ({
+        CarrierOptionsAction: () => dispatch(CarrierOptionsAction()),
+    })
+)
 export class FormSectionActivities extends Component {
+
+    static propTypes = {
+        CarrierOptionsAction: PropTypes.func.isRequired,
+        options: PropTypes.array.isRequired,
+        isOptions: PropTypes.bool.isRequired,
+    };
 
     constructor(props) {
         super(props);
@@ -19,56 +35,25 @@ export class FormSectionActivities extends Component {
 
     get initialState() {
         return {
-            activities: undefined,
+            // activities: undefined,
         }
     }
 
-    async componentDidMount() {
-        const {data} = await this.getActivities();
-        const activities = this.initActivities(data);
-        this.setState({activities})
+    componentDidMount() {
+        this.props.CarrierOptionsAction();
     }
 
-    getActivities() {
-        return fetch(config.api.baseUrl+config.api.register.getCarriersOption, {
-            method: 'get'
-        }).then((response) => {
-            if (response.status >= 200 && response.status < 300) {
-                return Promise.resolve(response);
-            }
-            return Promise.reject(response.status);
-        }).then((response) => {
-            return response.json()
-        }).then((response) => {
-            return response
-        }).catch(error => {
-            console.error(error);
-            return error;
-        });
-    }
+    render() {
 
-    initActivities(array){
-        const newArray = [];
-        if(array) {
-            array.map((item,index) => {
-                newArray.push({
-                    name: item.attributes.name,
-                    id: item.id,
-                })
-            });
-            return newArray
-        }
-    }
-
-
-    render(){
-
-        const {activities} = this.state;
-        if(!activities) {
+        const {isOptions,options} = this.props;
+        console.log(this.props);
+        if (isOptions) {
             return (<Preloader/>)
         }
-
-        return(
+        if(!options.length){
+            return null;
+        }
+        return (
             <CardBody className="animated fadeIn card-block">
                 <Row>
                     <Col className="col-md-6">
@@ -76,7 +61,7 @@ export class FormSectionActivities extends Component {
                             name="activities"
                             component={InputCheckboxGroup}
                             type="checkbox"
-                            options={activities}
+                            options={options}
                             validate={[required]}
                         />
                     </Col>

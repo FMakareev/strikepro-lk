@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {updateProduct} from "../../store/reducers/shopping_cart/actions";
 import ReactImageMagnify from 'react-image-magnify';
@@ -21,7 +22,12 @@ import ImageZoom from 'react-medium-image-zoom'
 )
 export class CatalogProductRow extends Component {
 
-    isNumber = value => value && isNaN(Number(value));
+    static propTypes = {
+        products: PropTypes.array,
+        updateProduct: PropTypes.func,
+        setStore: PropTypes.func,
+    }
+
 
     constructor(props) {
         super(props);
@@ -36,6 +42,7 @@ export class CatalogProductRow extends Component {
     }
 
 
+    isNumber = value => value && isNaN(Number(value));
     updateProduct(event) {
         if (!this.isNumber(event.target.value)) {
             let count = event.target.value;
@@ -93,7 +100,7 @@ export class CatalogProductRow extends Component {
                 <div className="product-quantity_wrapper">
                     <div className="product-quantity_btn">
                         <button type="button" className="btn__control" onClick={this.removeProduct}>
-                            <i className={"fa fa-minus"}></i>
+                            <i className={"fa fa-minus"}/>
                         </button>
                     </div>
                     <div className="product-quantity_input">
@@ -107,7 +114,7 @@ export class CatalogProductRow extends Component {
                     </div>
                     <div className="product-quantity_btn">
                         <button type="button" className="btn__control" onClick={this.addProduct}>
-                            <i className={"fa fa-plus"}></i>
+                            <i className={"fa fa-plus"}/>
                         </button>
                     </div>
                 </div>

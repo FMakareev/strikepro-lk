@@ -40,7 +40,7 @@ InputCheckboxGroup.propTypes = {
     name: PropTypes.string,
     required: PropTypes.bool,
     meta: MetaPropTypes,
-    options:  PropTypes.array(PropTypes.shape({
+    options:  PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string,
         id: PropTypes.any,
     })),

@@ -4,6 +4,14 @@ import {Alert, Button, Col, ModalBody, ModalFooter, Row} from "reactstrap";
 import {InputText} from "../Input/InputText/InputText";
 import {maxLength255, required} from "./form_register/form_registration-validate";
 import {WorkingHoursItem} from "./form_array/form_array-working-hours";
+import {connect as connectRestEasy} from "@brigad/redux-rest-easy/dist/redux-rest-easy.es";
+import {
+    CreateStoreAction, DeleteStoreAction, getStore, GetStoreAction,
+    isCreateStore,
+    isDeleteStore,
+    isGetStore,
+    isUpdateStore, UpdateStoreAction
+} from "../../store/reduxRestEasy/store";
 
 const data = [
     {
@@ -41,6 +49,22 @@ const data = [
 @reduxForm({
     form: 'FormStoreEdit',
 })
+
+@connectRestEasy(
+    (state, ownProps) => ({
+        getStore: getStore(state),
+        isGetStore:isGetStore(state, ownProps),
+        isCreateStore: isCreateStore(state, ownProps),
+        isUpdateStore: isUpdateStore(state, ownProps),
+        isDeleteStore: isDeleteStore(state, ownProps),
+    }),
+    dispatch => ({
+        CreateStoreAction: body => dispatch(CreateStoreAction({body})),
+        UpdateStoreAction: (body,urlParams) => dispatch(UpdateStoreAction({urlParams,body})),
+        DeleteStoreAction: (urlParams) => dispatch(DeleteStoreAction({urlParams})),
+        GetStoreAction: () => dispatch(GetStoreAction()),
+    })
+)
 class FormStoreEdit extends Component {
 
     constructor(props) {
@@ -60,7 +84,8 @@ class FormStoreEdit extends Component {
 
     async onSubmit(values) {
         console.log(values);
-        this.props.toggleModal()
+        this.props.CreateStoreAction(values);
+        // this.props.toggleModal()
         // const data = await fetch('http://alex.taran.ru/api/v1/auth/register', {
         //     method: 'POST',
         //     credentials: 'include',

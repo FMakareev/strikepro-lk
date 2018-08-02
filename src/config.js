@@ -3,15 +3,14 @@ export const config = {
         baseUrl: 'http://new.strikepro.ru/api/v1/',
 
         login:'auth/login',
-        register:{
-            getActivities: 'activities',
+        register: 'auth/register',
 
-            roles: 'persons/roles',
+        getActivities: 'activities',
+        roles: 'persons/roles',
+        fias: 'fias',
+        getCarriers: 'carriers',
+        getCarriersOption: 'carrier/options',
 
-            fias: 'fias',
-            getCarriers: 'carriers',
-            getCarriersOption: 'carrier/options',
-        },
 
     }
 };

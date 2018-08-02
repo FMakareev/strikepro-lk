@@ -15,7 +15,10 @@ import {CatalogProductRow} from "./catalog_product-row";
 )
 export class CatalogContent extends Component {
 
-    static propTypes = {};
+    static propTypes = {
+        products: PropTypes.array,
+        setStore: PropTypes.func,
+    };
 
     static defaultProps = {};
 
@@ -58,12 +61,10 @@ export class CatalogContent extends Component {
                         </tr>
                     }
                     {
-                        products && products.map((item, index) => {
-                            return <CatalogProductRow
-                                key={index}
-                                product={item}
-                            />
-                        })
+                        products && products.map((item, index) =>  <CatalogProductRow
+                            key={index}
+                            product={item}
+                        />)
                     }
                     </tbody>
                 </table>

@@ -58,7 +58,11 @@ const data = {
 )
 export class CatalogSidebar extends Component {
 
-    static propTypes = {};
+    static propTypes = {
+        onToggle: PropTypes.func.isRequired,
+        initCategory: PropTypes.func.isRequired,
+        tree: PropTypes.object.isRequired,
+    };
     static defaultProps = {};
 
     constructor(props) {

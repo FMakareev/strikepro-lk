@@ -85,7 +85,7 @@ export const updateProduct = (state, product, count) => {
 
             order.count = allCount;
             order.sum = sum;
-            console.log(order);
+            console.log('order: ', order);
             console.log(catalog_products);
 
             return new Promise((resolve, reject) => {

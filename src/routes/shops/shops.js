@@ -1,8 +1,21 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
 
 import {StoreItem} from "../../blocks/store/store_item";
 import {PageTitle} from "../../blocks/PageTitle/PageTitle";
 import {StoreEdit} from "../../blocks/store/store_edit";
+import {
+    GetStoreAction,
+    CreateStoreAction,
+    UpdateStoreAction,
+    DeleteStoreAction,
+    getStore,
+    isGetStore,
+    isCreateStore,
+    isUpdateStore,
+    isDeleteStore,
+}from "../../store/reduxRestEasy/store";
 
 const store = [
     {
@@ -131,7 +144,35 @@ const store = [
     }
 ];
 
+
+@connectRestEasy(
+    (state, ownProps) => ({
+        store: getStore(state),
+        isGetStore:isGetStore(state, ownProps),
+        isCreateStore: isCreateStore(state, ownProps),
+        isUpdateStore: isUpdateStore(state, ownProps),
+        isDeleteStore: isDeleteStore(state, ownProps),
+    }),
+    dispatch => ({
+        CreateStoreAction: body => dispatch(CreateStoreAction({body})),
+        UpdateStoreAction: (body,urlParams) => dispatch(UpdateStoreAction({urlParams,body})),
+        DeleteStoreAction: (urlParams) => dispatch(DeleteStoreAction({urlParams})),
+        GetStoreAction: () => dispatch(GetStoreAction()),
+    })
+)
 class Shops extends Component {
+
+    static propTypes = {
+        GetStoreAction: PropTypes.func.isRequired,
+        CreateStoreAction: PropTypes.func.isRequired,
+        UpdateStoreAction: PropTypes.func.isRequired,
+        DeleteStoreAction: PropTypes.func.isRequired,
+        store: PropTypes.array,
+        isGetStore: PropTypes.bool.isRequired,
+        isCreateStore: PropTypes.bool.isRequired,
+        isUpdateStore: PropTypes.bool.isRequired,
+        isDeleteStore: PropTypes.bool.isRequired,
+    }
 
     constructor(props) {
         super(props);
@@ -141,8 +182,13 @@ class Shops extends Component {
     get initialState() {
         return {}
     }
+    componentDidMount(){
+        this.props.GetStoreAction();
+    }
 
     render() {
+        console.log(this.props);
+        const {store} = this.props;
         return (
             <div id="body-container" className="animsition dashboard-page">
 
@@ -157,7 +203,7 @@ class Shops extends Component {
                 </PageTitle>
 
                 <div className="row">
-                    {store.map((item, index) => <StoreItem key={index} data={item}/>)}
+                    {store && store.map((item, index) => <StoreItem key={index} data={item}/>)}
                 </div>
 
 

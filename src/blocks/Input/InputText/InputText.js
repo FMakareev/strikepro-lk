@@ -25,7 +25,7 @@ export const InputText = ({input, label, type, meta, styleWrap, placeholder, cla
 InputText.propTypes = {
     input: InputPropTypes,
     label: PropTypes.string,
-    type: PropTypes.oneOf(['radio','checkbox']),
+    type: PropTypes.oneOf(['email','phone','text','password']),
     meta: MetaPropTypes,
     styleWrap: PropTypes.string,
     placeholder: PropTypes.string,

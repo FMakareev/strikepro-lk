@@ -9,7 +9,21 @@ import {CatalogShoppingCart} from "../../blocks/catalog/catalog_shopping-cart";
 import {connect} from "react-redux";
 import {Store} from '../../store/store';
 import {initShoppingCart} from "../../store/reducers/shopping_cart/actions";
+import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
+import {CatalogAction, getCatalog, isCatalog} from "../../store/reduxRestEasy/catalog";
 
+
+
+
+@connectRestEasy(
+    (state, ownProps) => ({
+        isLogin: isCatalog(state, ownProps),
+        getCatalog: getCatalog(state),
+    }),
+    dispatch => ({
+        CatalogAction: urlParams => dispatch(CatalogAction({urlParams})),
+    })
+)
 export class Catalog extends Component {
 
     constructor(props) {
@@ -24,13 +38,13 @@ export class Catalog extends Component {
 
     }
     componentDidMount(){
-
+        this.props.CatalogAction({id:''});
         Store.dispatch(initShoppingCart());
     }
 
     render() {
         const {sum, count} = this.state;
-        console.log(this);
+        console.log(this.props);
         return (
             <div id="body-container" className="animsition dashboard-page">
                 <PageTitle>
