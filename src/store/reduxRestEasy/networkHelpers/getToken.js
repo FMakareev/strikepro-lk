@@ -2,19 +2,22 @@ import {Store} from '../../store';
 import {BrowserHistory} from "../../../history";
 import {RefreshToken} from "../login";
 
-
+/**
+ * @return {object} возвращает объект пользователя в котором хранится: access_token, expireAt, expires_in, refresh_token, startedAt, token_type
+ * @desc метод получает из локального хранилища токен
+ * */
 export const getToken = async function () {
-    console.log(this);
 
     let CurrentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-    console.log('CurrentUser: ', CurrentUser);
-    console.log('Date: ', Date.now());
+
+    /** @desc если пользователя нет то пользователя отправляет на страницу авторизации */
     if (!CurrentUser) {
         BrowserHistory.push('/login');
         localStorage.clear();
         throw new Error('Пользователь не авторизован.');
     }
 
+    /** @desc если срок действия токена доступа истек то он автоматически обновляется */
     if (CurrentUser.expireAt <= Date.now()) {
         await
             Store.dispatch(RefreshToken({
@@ -34,7 +37,6 @@ export const getToken = async function () {
                 });
     }
 
-    console.log('return CurrentUser: ', CurrentUser);
     return CurrentUser
 };
 

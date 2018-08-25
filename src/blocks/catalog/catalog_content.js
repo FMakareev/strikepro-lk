@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+import InfiniteScroll from 'react-infinite-scroller';
 import {CatalogProductRow} from "./catalog_product-row";
+import {getProducts} from "../../store/reducers/catalog_products/actions";
 
 @connect(
     state => ({ // получаем данные из store
-        products: state.catalog_products.products
+        products: state.catalog_products.products,
+        links: state.catalog_products.links,
+        pagination: state.catalog_products.pagination,
     }), //
     dispatch => ({
         setStore: (type, value) => {
             dispatch({type: type, payload: value})
+        },
+        nextPage: (link) => {
+            dispatch(getProducts(link, 'next'));
         }
     })
 )
@@ -17,6 +24,8 @@ export class CatalogContent extends Component {
 
     static propTypes = {
         products: PropTypes.array,
+        links: PropTypes.object,
+        pagination: PropTypes.object,
         setStore: PropTypes.func,
     };
 
@@ -31,8 +40,9 @@ export class CatalogContent extends Component {
         return {}
     }
 
+
     render() {
-        const {products} = this.props;
+        const {products, nextPage, links} = this.props;
 
         return (
             <div className="panel-body">
@@ -47,26 +57,46 @@ export class CatalogContent extends Component {
                         <th>Страна</th>
                         <th>Цена</th>
                         <th width="100">Остаток</th>
-                        <th width="120"></th>
+                        <th width="120">
+                            <button onClick={() => {
+                                if (links.next) {
+                                    nextPage(links.next);
+                                }
+                            }}>
+                                nextPage
+                            </button>
+                        </th>
                     </tr>
                     </thead>
-                    <tbody>
                     {
                         !products &&
-                        <tr>
+                        <tbody> <tr>
                             <td colSpan="9">
                                 <h2 style={{opacity: '0.4'}} className="text-help text-md-center">Выберите
                                     категорию</h2>
                             </td>
-                        </tr>
+                        </tr></tbody>
                     }
                     {
-                        products && products.map((item, index) =>  <CatalogProductRow
-                            key={index}
-                            product={item}
-                        />)
+                        products &&
+                        <InfiniteScroll
+                            element={'tbody'}
+                            pageStart={0}
+                            loadMore={() => {
+                                nextPage(links.next)
+                            }}
+                            hasMore={links.next}
+                            loader={<div className="loader" key={0}>Загрузка ...</div>}
+                            useWindow={false}
+                            threshold={'900'}
+
+                        >
+                            {products.map((item, index) => <CatalogProductRow
+                                key={index}
+                                product={item}
+                            />)}
+                        </InfiniteScroll>
                     }
-                    </tbody>
                 </table>
             </div>
         )

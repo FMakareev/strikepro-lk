@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Field, FormSection, reduxForm, formValueSelector, FieldArray} from "redux-form";
+import {Field, FormSection, reduxForm, formValueSelector, FieldArray, SubmissionError} from "redux-form";
 import {Alert, Button, Col, ModalBody, ModalFooter, Row} from "reactstrap";
 import {InputText} from "../Input/InputText/InputText";
 import {maxLength255, required} from "./form_register/form_registration-validate";
@@ -12,6 +12,7 @@ import {
     isGetStore,
     isUpdateStore, UpdateStoreAction
 } from "../../store/reduxRestEasy/store";
+import {BrowserHistory} from "../../history";
 
 const data = [
     {
@@ -84,31 +85,27 @@ class FormStoreEdit extends Component {
 
     async onSubmit(values) {
         console.log(values);
-        this.props.CreateStoreAction(values);
         // this.props.toggleModal()
-        // const data = await fetch('http://alex.taran.ru/api/v1/auth/register', {
-        //     method: 'POST',
-        //     credentials: 'include',
-        //     cache: 'no-cache',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(values),
-        // }).then(response => {
-        //     console.log(response);
-        //     if (response.status >= 200 && response.status < 300) {
-        //         return Promise.resolve(response);
-        //     }
-        //     return Promise.reject(response);
-        // }).then((response) => {
-        //     return response.json()
-        // }).then((response) => {
-        //     return response
-        // }).catch(error => {
-        //     console.log(error);
-        // });
-        // console.log(data);
+        return new Promise((resolve, reject) => {
+            this.props.CreateStoreAction(values)
+                .then(response => {
+                    console.log(response);
+                    if (response.status >= 200 && response.status < 300) {
+                        this.props.toggleModal()
+                        return resolve(response);
+                    } else if (response.status >= 400 || response.error) {
+                        return Promise.reject(response);
+                    } else {
+                        this.props.toggleModal()
+
+                        return resolve(response);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(new SubmissionError({_error: error.error.message}));
+                });
+        })
     }
 
     render() {
@@ -121,9 +118,8 @@ class FormStoreEdit extends Component {
                         component="input"
                         type="hidden"
                     />
-                    <h2>О магазине</h2>
-                    <div className="row">
-                        <div className="col-md-6">
+                    <Row>
+                        <Col md={6}>
                             <Field
                                 name="name"
                                 component={InputText}
@@ -131,8 +127,8 @@ class FormStoreEdit extends Component {
                                 type="text"
                                 validate={[required, maxLength255]}
                             />
-                        </div>
-                        <div className="col-md-6">
+                        </Col>
+                        <Col md={6}>
                             <Field
                                 name="address"
                                 component={InputText}
@@ -140,12 +136,12 @@ class FormStoreEdit extends Component {
                                 type="text"
                                 validate={[required, maxLength255]}
                             />
-                        </div>
-                        <div className="col-md-12">
+                        </Col>
+                        <Col  xs="12">
 
                             <FieldArray name="workinghours" data={data} component={WorkingHoursItem}/>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
 
                     {
                         error &&

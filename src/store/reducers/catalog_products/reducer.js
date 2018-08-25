@@ -19,9 +19,7 @@ export const catalog_products = (state = {}, action) => {
         case SET_PRODUCTS: {
             console.log(SET_PRODUCTS, action);
 
-            return Object.assign({}, state, {
-                products: action.payload
-            })
+            return Object.assign({}, state, action.payload)
         }
         case UPDATE_PRODUCT: {
             console.log(UPDATE_PRODUCT, action);

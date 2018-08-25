@@ -29,7 +29,7 @@ class StoreEdit extends Component {
             <div style={{display: "inline-block"}}>
                 <Button color="warning" onClick={this.toggle}>{this.props.buttonLabel}</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>О магазине</ModalHeader>
 
                         <FormStoreEdit
                             initialValues={this.props.data ? this.props.data: {}}

@@ -50,6 +50,7 @@ const store = createResource('store')({
             async requestPUT(body) {
                 let CurrentUser = await this.getToken().then(res => res);
                 return {
+                    method: 'PUT',
                     headers: {
                         Accept: 'application/json',
                         Authorization: `Bearer ${CurrentUser.access_token}`,
@@ -68,6 +69,7 @@ const store = createResource('store')({
             async requestDELETE() {
                 let CurrentUser = await this.getToken().then(res => res);
                 return {
+                    method: 'DELETE',
                     headers: {
                         Accept: 'application/json',
                         Authorization: `Bearer ${CurrentUser.access_token}`,

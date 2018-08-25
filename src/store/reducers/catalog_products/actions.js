@@ -7,7 +7,7 @@ import {is_fetch} from "../../../utils/fetch";
 import {ORDER_CHANGE_PRODUCT} from "../order/action_types";
 import {Store} from '../../store';
 
-export const getProducts = (url) => {
+export const getProducts = (url, links) => {
 
     return (dispatch) => {
         dispatch({
@@ -40,7 +40,7 @@ export const getProducts = (url) => {
                 });
                 dispatch({
                     type: SET_PRODUCTS,
-                    payload: transformProducts(response)
+                    payload: transformProducts(response, links),
                 });
                 resolve(response)
             }).catch(error => {
@@ -56,35 +56,46 @@ export const getProducts = (url) => {
     }
 };
 
-const transformProducts = (products) => {
-    const newProducts = normalize(products).get([
-        'id',
-        'type',
-        'group_id',
-        'code',
-        'fullname',
-        'unit',
-        'article',
-        'manufacturers',
-        'balance',
-        'price.price_type',
-        'price.price',
-        'logo',
-        'logo.thumb_url',
-        'count'
-    ]);
+const transformProducts = (products, links) => {
+    const newProducts = {
+        links: products.links,
+        pagination: products.meta.pagination,
+        products: normalize(products).get([
+            'id',
+            'type',
+            'group_id',
+            'code',
+            'fullname',
+            'unit',
+            'article',
+            'manufacturers',
+            'balance',
+            'price.price_type',
+            'price.price',
+            'logo',
+            'logo.thumb_url',
+            'count'
+        ])
+    }
+
+    if (links === 'next') {
+        newProducts.products = [...newProducts.products, ...Store.getState().catalog_products.products];
+    }
+
     if (Store.getState().shopping_cart.order.products.length) {
-        let shopping_cart = Store.getState().shopping_cart.order.products;
-        newProducts.map(item => {
-            let shopping_cart_product = shopping_cart.find((obj) => obj.id === item.id);
+        const shoppingCart = Store.getState().shopping_cart.order.products;
+
+        newProducts.products.forEach(item => {
+            let shopping_cart_product = shoppingCart.find((obj) => obj.id === item.id);
             if (shopping_cart_product) {
                 item.count = shopping_cart_product.count;
             } else {
                 item.count = 0;
             }
         })
+
     } else {
-        newProducts.map(item => item.count = 0);
+        newProducts.products.map(item => item.count = 0);
     }
 
 

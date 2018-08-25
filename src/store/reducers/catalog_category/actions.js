@@ -62,24 +62,20 @@ export const initCategory = (store) => {
 }
 
 const createChildren = ({data}) => {
-    const children = [];
     if (data) {
-        data.map((item, index) => {
-            children.push({
-                name: item.attributes.name,
-                type: item.type,
-                id: item.id,
-                is_product: item.attributes.is_product,
-                ...(item.attributes.is_product === '0' ? {
-                    loading: true,
-                    children: []
-                } : null)
-
-            },)
-        });
+        return data.map((item, index) => ({
+            name: item.attributes.name,
+            type: item.type,
+            id: item.id,
+            is_product: item.attributes.is_product,
+            ...(item.attributes.is_product === '0' ? {
+                loading: true,
+                children: []
+            } : null)
+        }));
     }
-    return children;
-}
+    return [];
+};
 
 export const onToggle = (node, toggled) => {
     return (dispatch) => {

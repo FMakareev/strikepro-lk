@@ -13,6 +13,7 @@
 .catalog_content {
     float: right;
     width: calc(100% - 365px);
+    margin-bottom: 45px;
 }
 
 .shopping-cart__wrap {
