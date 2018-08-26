@@ -12,19 +12,6 @@ export const CarrierOptions = createResource('options', {cacheLifetime: 30})({
         url: 'http://new.strikepro.ru/api/v1/carrier/options',
         afterHook: () => console.log('Get carrier successfully'),
         normalizer: ({data}) => normalize(data, CarrierOptionsSchema),
-        networkHelpers: {
-            getToken: getToken,
-            async requestGET() {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        access_token: CurrentUser.access_token,
-                    },
-                };
-            },
-        }
 
     },
 });
