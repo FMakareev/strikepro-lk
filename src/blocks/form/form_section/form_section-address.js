@@ -7,11 +7,13 @@ import {maxLength255, required} from "../form_register/form_registration-validat
 
 const types = [{
     label: 'Юридический адрес (ФИАС)',
-    type: 'legal'
+    type: 'LEGAL'
 }, {
     label: 'Фактический адрес (ФИАС)',
-    type: 'actual'
+    type: 'POSTAL'
 },];
+
+
 
 
 export class FormSectionAddress extends Component {
@@ -37,7 +39,7 @@ export class FormSectionAddress extends Component {
                         {
                             index !== 1 &&
                             <Field
-                                name={`address[${index}].fias_id`}
+                                name={`places[${index}].address`}
                                 type="text"
                                 component={InputText}
                                 label={types[index].label}
@@ -48,7 +50,7 @@ export class FormSectionAddress extends Component {
                         {
                             index === 1 && !disabledCheckbox &&
                             <Field
-                                name={`address[${index}].fias_id`}
+                                name={`places[${index}].address`}
                                 type="text"
                                 component={InputText}
                                 label={types[index].label}
@@ -59,7 +61,7 @@ export class FormSectionAddress extends Component {
                         {
                             index === 1 && disabledCheckbox &&
                             <Field
-                                name={`address[${index}].fias_id`}
+                                name={`places[${index}].address`}
                                 type="text"
                                 component={InputText}
                                 label={types[index].label}
@@ -68,16 +70,26 @@ export class FormSectionAddress extends Component {
                         }
 
                         <Field
-                            name={`address[${index}].type`}
+                            name={`places[${index}].type`}
                             type="hidden"
                             component="input"
                             value={types[index].type}/>
                         {
                             index === 1 &&
                             <Label>
-                                <Input checked={disabledCheckbox} type='checkbox' onChange={() => { this.setState({
-                                    disabledCheckbox: !this.state.disabledCheckbox
-                                })}}/> {' '}
+                                <Field
+                                    checked={disabledCheckbox}
+                                    name={`places[${index}].isActive`}
+                                    type={'checkbox'}
+                                    component={'input'}
+                                    onChange={() => { this.setState({
+                                        disabledCheckbox: !this.state.disabledCheckbox
+                                    })}}
+                                />
+                                {/*<Input checked={disabledCheckbox} type='checkbox' onChange={() => { this.setState({*/}
+                                    {/*disabledCheckbox: !this.state.disabledCheckbox*/}
+                                {/*})}}/> */}
+                                {' '}
                                 Cовпадает с Юр. Адресом
                             </Label>
                         }

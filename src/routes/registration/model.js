@@ -1,21 +1,23 @@
 export const initialValues = {
     form_type: 'individual_entrepreneur',
     company: {
-        address: [
+        places: [
             {
-                type: 'legal',
+                type: 'LEGAL',
             }, {
-                type: 'actual',
+                type: 'POSTAL',
             }
         ],
         email: [
             {
                 type: 'email',
+                "subscription": false
             }
         ],
         phone: [
             {
                 type: 'phone',
+                "subscription": false
             }
         ],
 

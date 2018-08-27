@@ -30,7 +30,14 @@ class Register extends Component {
 
 
     render() {
-        // console.log(initialValues);
+        const {
+            match: {
+                params:{
+                    type
+                }
+            }
+        } = this.props;
+        initialValues.form_type = type;
         return (
             <FormRegister
                 initialValues={initialValues}

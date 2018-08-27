@@ -38,7 +38,7 @@ const FormSectionAboutCompany = (props) => {
                                 name="nds"
                                 component={InputCheckbox}
                                 type="checkbox"
-                                label="Является плательщикиком НДС"
+                                label={"Является плательщикиком НДС"}
                             />
                         )
                     }
@@ -47,7 +47,7 @@ const FormSectionAboutCompany = (props) => {
                     <Col className="col-md-12">
                         <div className="row">
                             <Field
-                                name="address"
+                                name={"places"}
                                 component={FormSectionAddress}
                             />
                         </div>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Alert, Button, Card, CardFooter, CardHeader, Col, Row} from "reactstrap";
-import {Field, FormSection, reduxForm, formValueSelector, SubmissionError, getFormValues} from "redux-form";
+import {Field, FormSection, reduxForm, SubmissionError, getFormValues} from "redux-form";
 import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
 
 import {FormSectionUser} from "../form_section/form_section-user";
@@ -8,8 +8,6 @@ import {FormSectionActivities} from "../form_section/form_section-activities";
 import {FormSectionEmail, FormSectionPhone} from "../form_section/form_section-contacts";
 import {FormSectionAboutCompany} from "../form_section/form_section-about-company";
 import {connect} from "react-redux";
-import {bindActionCreators} from "redux";
-import {ServerValidError} from "../../../store/reducers/form_register/actions";
 
 import {CreateUserAction, isCreateUser} from '../../../store/reduxRestEasy/register'
 
@@ -49,11 +47,39 @@ export class FormRegister extends Component {
         return {}
     }
 
-    onSubmit(values) {
-        console.log(values);
+    transformValue(data) {
+
+        const value = Object.assign({}, data);
+
+        console.log('transformValue: ', value);
+
+        value.company.contacts = [...value.company.phone, ...value.company.email];
+
+        console.log('transformValue: ', value);
+        delete value.company.email;
+        delete value.company.phone;
+
+        console.log('transformValue: ', value);
+
+
+        if (value.company.places[1].isActive) {
+            value.company.places[1].value = value.company.places[0].value;
+            delete value.company.places[1].isActive
+        }
+
+        console.log('transformValue: ', value);
+
+
+        return value;
+
+    }
+
+    onSubmit(data) {
+        console.log('onSubmit: ', data);
+
 
         return new Promise((resolve, reject) =>
-            this.props.CreateUserAction(values)
+            this.props.CreateUserAction(this.transformValue(data))
                 .then(response => {
                     console.log(response);
                     if (response.status >= 200 && response.status < 300) {
@@ -126,12 +152,12 @@ export class FormRegister extends Component {
                     {/*<FormSectionPersons/>*/}
                     {/*</Card>*/}
 
-                    <Card>
-                        <CardHeader>
-                            <h2><strong>Виды деятельности</strong></h2>
-                        </CardHeader>
-                        <FormSectionActivities/>
-                    </Card>
+                    {/*<Card>*/}
+                        {/*<CardHeader>*/}
+                            {/*<h2><strong>Виды деятельности</strong></h2>*/}
+                        {/*</CardHeader>*/}
+                        {/*<FormSectionActivities/>*/}
+                    {/*</Card>*/}
 
                     {/*<Card>*/}
                     {/*<CardHeader>*/}
