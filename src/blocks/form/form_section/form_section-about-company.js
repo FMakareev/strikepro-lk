@@ -39,6 +39,7 @@ const FormSectionAboutCompany = (props) => {
                                 component={InputCheckbox}
                                 type="checkbox"
                                 label={"Является плательщикиком НДС"}
+                                disabled={true}
                             />
                         )
                     }
