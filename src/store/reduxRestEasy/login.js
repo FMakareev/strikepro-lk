@@ -4,6 +4,7 @@ import {createResource} from '@brigad/redux-rest-easy';
 import {normalize} from "normalizr";
 import {LoginSchema} from "./schemas/LoginSchema";
 import {BrowserHistory} from "../../history";
+import handleStatusCode from "./networkHelpers/handleStatusCode";
 
 
 
@@ -22,7 +23,7 @@ export const login = createResource('login', {cacheLifetime: 600})({
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
-            })
+            }),
         }
     },
     refreshToken: {
@@ -30,7 +31,7 @@ export const login = createResource('login', {cacheLifetime: 600})({
         url: '/api/v1/auth/refresh_token',
         afterHook: () => console.log('refresh_token successfully'),
         normalizer: (response) => {
-            console.log('refresh_token response normalizer: ', response);
+            console.log('normalize(response, LoginSchema): ', normalize(response, LoginSchema));
             return normalize(response, LoginSchema)
         },
         networkHelpers: {
@@ -41,7 +42,8 @@ export const login = createResource('login', {cacheLifetime: 600})({
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(body),
-            })
+            }),
+            handleStatusCode: handleStatusCode
         }
     },
     logOut: {
@@ -52,6 +54,9 @@ export const login = createResource('login', {cacheLifetime: 600})({
             localStorage.clear();
             console.log('user logout successfully');
         },
+        networkHelpers: {
+            handleStatusCode: handleStatusCode
+        }
     }
 });
 console.log('login: ', login);
