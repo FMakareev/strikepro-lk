@@ -16,6 +16,7 @@ import {Orders} from "./orders/orders";
 import {OrdersEditor} from "./orders/orders-editor";
 import {Catalog} from "./catalog/catalog";
 import {BrowserHistory} from "../history";
+import InternalServerError from "./InternalServerError/InternalServerError";
 
 const AuthRoute = ({component: Component, ...rest}) => {
     return (
@@ -27,23 +28,23 @@ const AuthRoute = ({component: Component, ...rest}) => {
     )
 };
 
-const MainRoute = ({component: Component, ...rest}) => {
+const MainRoute = ({component: Component, title, description, ...rest}) => {
     return (
         <Route {...rest} render={matchProps => (
             <LayoutMain>
-                <Component {...matchProps} />
+                <Component title={title} description={description} {...matchProps} />
             </LayoutMain>
         )}/>
     )
 };
 
 export class RouterWrapper extends Component {
-    render(){
+    render() {
         return (
-            <Router history={BrowserHistory} basename="/" >
+            <Router history={BrowserHistory} basename="/">
                 <Route>
                     <Switch>
-                        <AuthRoute  exact path="/register/type" name="Тип пользователя" component={RegistrationType}/>
+                        <AuthRoute exact path="/register/type" name="Тип пользователя" component={RegistrationType}/>
                         <AuthRoute exact path="/register/:type" name="Регистрация" component={Register}/>
                         <AuthRoute exact path="/login" name="Вход" component={Login}/>
 
@@ -56,7 +57,31 @@ export class RouterWrapper extends Component {
                         <MainRoute exact path="/catalog" name="Каталог" component={Catalog}/>
 
                         <MainRoute path="/Error" name="Ошибка" component={PageError}/>
-                        <MainRoute component={PageNotFound}/>
+                        <MainRoute
+                            path="/500"
+                            title={'500'}
+                            description={'Внутренняя ошибка сервера'}
+                            component={InternalServerError}
+                        />
+                        <MainRoute
+                            path="/404"
+                            title={'404'}
+                            description={'Страница не найдена'}
+                            component={InternalServerError}
+                        />
+                        <MainRoute
+                            path="/404"
+                            title={'404'}
+                            description={'Страница не найдена'}
+                            component={InternalServerError}
+                        />
+                        <MainRoute
+                            path="/*"
+                            title={'404'}
+                            description={'Страница не найдена'}
+                            component={InternalServerError}
+                        />
+
 
                     </Switch>
                 </Route>
