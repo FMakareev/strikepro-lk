@@ -1,10 +1,6 @@
 import {normalize} from "normalizr";
 import {createResource,} from '@brigad/redux-rest-easy';
-import {Store} from '../store';
-
 import {CarrierOptionsSchema} from "./schemas/CarrierOptionsSchema";
-import {getToken} from "./networkHelpers/getToken";
-
 
 export const CarrierOptions = createResource('options', {cacheLifetime: 30})({
     options: {
@@ -12,6 +8,7 @@ export const CarrierOptions = createResource('options', {cacheLifetime: 30})({
         url: 'http://new.strikepro.ru/api/v1/carrier/options',
         afterHook: () => console.log('Get carrier successfully'),
         normalizer: ({data}) => normalize(data, CarrierOptionsSchema),
+
 
     },
 });
