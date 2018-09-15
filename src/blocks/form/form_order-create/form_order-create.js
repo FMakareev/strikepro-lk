@@ -3,24 +3,50 @@ import PropTypes from 'prop-types';
 import {Alert, Button, Col, ModalBody, ModalFooter, Row} from "reactstrap";
 import {Field, reduxForm} from "redux-form";
 import {InputText} from "../../Input/InputText/InputText";
-import {required} from "../form_register/form_registration-validate";
+
 import {SelectDefault} from "../../select/select_default";
+import {connect as connectRestEasy} from '@brigad/redux-rest-easy'
 
-import {connect} from "react-redux";
-import * as actions from '../../../store/reducers/order/actions';
-import { bindActionCreators } from 'redux'
+import {
+    getStore,
+    hasSucceededGetStore,
+    hasFailedGetStore, GetStoreAction,
+} from "../../../store/reduxRestEasy/store";
+import {
+    CreateOrderAction,
+    UpdateOrderAction,
+    DeleteOrderAction,
+    hasSucceededGetOrders,
+    hasFailedGetOrders,
 
-@connect(
-    state => ({
-        Store: state
-    }), //
-    dispatch => ({
-        createOrder: bindActionCreators(actions, dispatch)
-    })
-)
+    isCreateOrder,
+    isUpdateOrder,
+    isDeleteOrder,
+    ResetOrders
+} from "../../../store/reduxRestEasy/order";
+
+
 @reduxForm({
     form: 'FormOrderCreate',
 })
+@connectRestEasy(
+    (state, ownProps) => ({
+        store: getStore(state, ownProps),
+        hasSucceededGetStore: hasSucceededGetStore(state, ownProps),
+        hasFailedGetStore: hasFailedGetStore(state, ownProps),
+        isCreateOrder: isCreateOrder(state, ownProps),
+        isUpdateOrder: isUpdateOrder(state, ownProps),
+        isDeleteOrder: isDeleteOrder(state, ownProps)
+    }),
+    dispatch => ({
+        CreateOrderAction: body => dispatch(CreateOrderAction({body})),
+        UpdateOrderAction: (body, urlParams) =>
+            dispatch(UpdateOrderAction({urlParams, body})),
+        DeleteOrderAction: urlParams => dispatch(DeleteOrderAction({urlParams})),
+        GetStoreAction: () => dispatch(GetStoreAction()),
+        ResetOrder: () => dispatch(ResetOrders())
+    })
+)
 export class FormOrderCreate extends Component {
 
     static propTypes = {};
@@ -38,10 +64,18 @@ export class FormOrderCreate extends Component {
         return {}
     }
 
+    componentDidMount() {
+        this.props.GetStoreAction()
+    }
+
     onSubmit(value) {
-        console.log(value);
-        console.log(this.props);
-        this.props.createOrder.actionCreateOrder(value);
+        console.log('value: ', value);
+
+        this.props.CreateOrderAction(value).then((response) => {
+            console.log(response);
+        }).catch(error => {
+            console.log(error);
+        })
     }
 
     onCancel() {
@@ -49,26 +83,23 @@ export class FormOrderCreate extends Component {
     }
 
     render() {
-        const {error, handleSubmit, pristine, reset, submitting, roles, type} = this.props;
+        const {error, handleSubmit, pristine, reset, submitting, hasSucceededGetStore, store} = this.props;
+        console.log(this.props);
         return (
             <form onSubmit={handleSubmit(this.onSubmit)}>
                 <ModalBody>
                     <div className="row">
                         <div className="col-md-12">
                             <Field
-                                name="store_id"
-                                options={[
-                                    {
-                                        id: 1,
-                                        name: 'store 1'
-                                    }, {
-                                        id: 2,
-                                        name: 'store 2'
-                                    }, {
-                                        id: 3,
-                                        name: 'store 3'
-                                    }
-                                ]}
+                                name={"store.id"}
+                                labelKey={'label'}
+                                valueKey={'value'}
+                                isLoading={!hasSucceededGetStore}
+                                disabled={!hasSucceededGetStore}
+                                options={store && store.map(item => ({
+                                    label: item.name,
+                                    value: item.id,
+                                }))}
                                 component={SelectDefault}
                                 label="Выберите магазин"
                                 // validate={[required]}
@@ -88,7 +119,7 @@ export class FormOrderCreate extends Component {
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <Button type="submit" color="primary">Отправить</Button>
+                    <Button disabled={!hasSucceededGetStore} type="submit" color="primary">Отправить</Button>
                 </ModalFooter>
             </form>
         )
