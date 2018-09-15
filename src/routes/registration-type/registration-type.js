@@ -23,7 +23,7 @@ class RegistrationType extends Component {
                         <ul className="form-content">
                             <li className="form-group">
                                 <Link
-                                    className="btn btn-rounded btn-white p1025" to={{
+                                    className="btn btn-rounded btn-block btn-white p1025" to={{
                                     pathname: '/register/individual_entrepreneur'
                                 }}>
                                     Индивидуальный предприниматель
@@ -31,7 +31,7 @@ class RegistrationType extends Component {
                             </li>
                             <li className="form-group">
                                 <Link
-                                    className="btn btn-rounded btn-white p1025" to={{
+                                    className="btn btn-rounded btn-block btn-white p1025" to={{
                                     pathname: '/register/legal_entity_not_rf'
                                 }}>
                                     Юр. лицо, за пределами РФ
@@ -39,7 +39,7 @@ class RegistrationType extends Component {
                             </li>
                             <li className="form-group">
                                 <Link
-                                    className="btn btn-rounded btn-white p1025" to={{
+                                    className="btn btn-rounded btn-block btn-white p1025" to={{
                                     pathname: '/register/legal_entity'
                                 }}>
                                     Юридическое лицо
