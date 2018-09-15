@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types'
 import Select from 'react-select';
 import style from 'react-select/dist/react-select.css';
 import {Alert, FormGroup, Label} from "reactstrap";
 
 export class SelectDefault extends Component {
-    static propTypes = {};
+    static propTypes = {
+        labelKey:PropTypes.string,
+        valueKey: PropTypes.string,
+    };
 
-    static defaultProps = {};
+    static defaultProps = {
+        labelKey:'name',
+        valueKey: 'value'
+    };
 
 
     constructor(props) {
@@ -23,6 +30,10 @@ export class SelectDefault extends Component {
             input,
             label,
             options,
+            labelKey,
+            valueKey,
+            isLoading,
+            disabled,
             meta: {
                 touched,
                 error
@@ -36,11 +47,12 @@ export class SelectDefault extends Component {
                         name={input.name}
                         value={input.value}
                         options={options}
-                        labelKey="name"
-                        valueKey="id"
-                        onChange={(e) => {
-                            return input.onChange(e ? e.id : null);
-                        }}
+                        labelKey={labelKey}
+                        valueKey={valueKey}
+                        isLoading={isLoading}
+                        disabled={disabled}
+                        onChange={e => input.onChange(e ? e[valueKey] : null)}
+
                     />
                     {
                         touched && error &&
