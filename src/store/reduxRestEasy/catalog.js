@@ -1,6 +1,4 @@
-import { normalize } from "normalizr";
 import {createResource} from '@brigad/redux-rest-easy';
-import {CarrierOptionsSchema} from "./schemas/CarrierOptionsSchema";
 
 
 export const Catalog = createResource('catalog', { cacheLifetime: 30 })({
