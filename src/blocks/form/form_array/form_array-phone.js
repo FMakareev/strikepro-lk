@@ -35,14 +35,17 @@ const renderSubFields = (member, index, fields) => {
                     <i className="fa fa-trash-o"/>
                 </button>
             </div>
+
             <Field
                 name={`${member}.type`}
                 type="hidden"
                 component="input"
-                value={'phone'}/>
+                value={'phone'}
+            />
+
             <div className="form-inline">
                 <Field
-                    name={`phone.is_main`}
+                    name={`${member}.is_main`}
                     component={InputCheckbox}
                     type="checkbox"
                     label="Желаемый вид связи"
