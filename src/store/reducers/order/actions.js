@@ -4,7 +4,7 @@ import {
     ORDER_SAVE,
     CREATE_ORDER_LOAD,
     CREATE_ORDER_SUCCESS,
-    CREATE_ORDER_ERROR,
+    // CREATE_ORDER_ERROR,
 } from './action_types';
 
 export const actionCreateOrder = (data) => {
