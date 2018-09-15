@@ -10,6 +10,7 @@ import {FormSectionAboutCompany} from "../form_section/form_section-about-compan
 import {connect} from "react-redux";
 
 import {CreateUserAction, isCreateUser} from '../../../store/reduxRestEasy/register'
+import {BrowserHistory} from "../../../history";
 
 function mapStateToProps(state) {
     return {
@@ -53,11 +54,18 @@ export class FormRegister extends Component {
 
         console.log('transformValue: ', value);
 
-        value.company.contacts = [...value.company.phone, ...value.company.email];
+        value.company.contacts = [
+            ...(value.company.phone ? value.company.phone: null),
+            ...(value.company.email ? value.company.email: null),
+        ];
 
         console.log('transformValue: ', value);
-        delete value.company.email;
-        delete value.company.phone;
+        if(value.company.email){
+            delete value.company.email;
+        }
+        if(value.company.phone){
+            delete value.company.phone;
+        }
 
         console.log('transformValue: ', value);
 
@@ -81,7 +89,10 @@ export class FormRegister extends Component {
         return new Promise((resolve, reject) =>
             this.props.CreateUserAction(this.transformValue(data))
                 .then(response => {
-                    console.log(response);
+                    console.log(response.normalizedPayload);
+                    if(response.normalizedPayload){
+                        BrowserHistory.push('/login');
+                    }
                     if (response.status >= 200 && response.status < 300) {
                         resolve(response);
                     } else if (response.status === 422) {
@@ -89,8 +100,9 @@ export class FormRegister extends Component {
                     }
                     return Promise.reject(response);
                 }).catch(error => {
-                console.log(error.error.message);
-                reject(new SubmissionError({_error: error.error.message}));
+                console.log(error);
+                console.log(error.message);
+                reject(new SubmissionError({_error: error.message}));
             }))
 
     }
