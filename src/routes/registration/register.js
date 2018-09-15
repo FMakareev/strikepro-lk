@@ -38,6 +38,9 @@ class Register extends Component {
             }
         } = this.props;
         initialValues.form_type = type;
+        if(this.state.type === 'legal_entity'){
+            initialValues.company.nds = true;
+        }
         return (
             <FormRegister
                 initialValues={initialValues}
