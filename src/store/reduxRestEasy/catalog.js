@@ -4,7 +4,7 @@ import {createResource} from '@brigad/redux-rest-easy';
 export const Catalog = createResource('catalog', { cacheLifetime: 30 })({
     catalog: {
         method: 'GET',
-        url: 'http://new.strikepro.ru/api/v1/catalog::id',
+        url: '/api/v1/catalog::id',
         afterHook: () => console.log('Get carrier successfully'),
     },
 });
