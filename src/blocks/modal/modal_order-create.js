@@ -29,7 +29,7 @@ export class ModalOrderCreate extends Component {
                 <button className="btn btn-success" onClick={this.toggle}>Создать новый заказ</button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Создание заказа</ModalHeader>
-                    <FormOrderCreate/>
+                    <FormOrderCreate closeForm={this.toggle}/>
                 </Modal>
             </div>
         );
