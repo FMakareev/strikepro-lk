@@ -5,7 +5,7 @@ import {createResource} from '@brigad/redux-rest-easy';
 export const createUser = createResource('createUser')({
     register: {
         method: 'POST',
-        url: 'http://new.strikepro.ru/api/v1/auth/register',
+        url: '/api/v1/auth/register',
         afterHook: () => console.log('User create successfully'),
         networkHelpers: {
             requestPOST: (body) => ({
