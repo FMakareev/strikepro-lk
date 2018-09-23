@@ -8,9 +8,9 @@ const store = createResource('store', {cacheLifetime: 0})({
         url: '/api/v1/stores',
         afterHook: () => console.log('Get stores successfully'),
         normalizer: response => {
-            console.log('response', response)
+            console.log('response', response);
 
-            let store = normalize(response).stores
+            let store = normalize(response).stores;
 
             if (!store) {
                 return {}
@@ -22,7 +22,7 @@ const store = createResource('store', {cacheLifetime: 0})({
                 workinghours: JSON.parse(item.attributes.workinghours),
                 createdAt: item.attributes.createdAt.date,
                 updatedAt: item.attributes.updatedAt.date
-            }))
+            }));
 
             let data = {
                 entities: {store: {}},
@@ -79,7 +79,7 @@ const store = createResource('store', {cacheLifetime: 0})({
                     method: 'POST',
                     headers: {
                         Accept: 'application/json',
-                        'Content-type': 'application/json',
+                      'Content-type': 'application/json',
                         Authorization: `Bearer ${CurrentUser.access_token}`
                     },
                     body: JSON.stringify(body)
