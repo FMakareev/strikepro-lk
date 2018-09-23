@@ -1,223 +1,153 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {PageTitle} from "../../blocks/PageTitle/PageTitle";
-import {Link} from "react-router-dom";
-import {Tabs} from "../../blocks/tabs/tabs";
+import {OrdersTabs} from "../../blocks/OrdersTabs/OrdersTabs";
 import {ModalOrderCreate} from "../../blocks/modal/modal_order-create";
-
-export const order = [
-    {
-        id: 123, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 1223, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 1243, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 11123, // id заказа
-        status: '0', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 12553, // id заказа
-        status: '0', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 122353, // id заказа
-        status: '2', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 769123, // id заказа
-        status: '2', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 12743, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 132963, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 19624743, // id заказа
-        status: '1', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 1484243, // id заказа
-        status: '0', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 14824839, // id заказа
-        status: '0', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 1224853, // id заказа
-        status: '2', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }, {
-        id: 123625853, // id заказа
-        status: '2', // статус заказа
-        date: 412412512512, // дата заказа
-        order_cost: 1000, // стоимость заказа
-        numberPosition: 1, // колличество видов товара
-        count: 10, // общее колличество товаров
-        store: 1,
-    }
-];
+import {connect as connectRestEasy} from '@brigad/redux-rest-easy'
+import {
+  CreateOrderAction,
+  DeleteOrderAction,
+  isCreateOrder,
+  isDeleteOrder,
+  isUpdateOrder,
+  ResetOrders,
+  UpdateOrderAction,
+  GetOrdersAction,
+  GetOrders,
+  getResourceGetOrders,
+  getMetadataGetOrders,
+  couldPerformGetOrders,
+  isPerformingGetOrders,
+  hasSucceededGetOrders, hasFailedGetOrders, isValidGetOrders
+} from "../../store/reduxRestEasy/order";
 
 
+@connectRestEasy(
+  (state, ownProps) => ({
+    orders: GetOrders(state, ownProps),
+    getResourceGetOrders: getResourceGetOrders(state, ownProps),
+    getMetadataGetOrders: getMetadataGetOrders(state, ownProps),
+    couldPerformGetOrders: couldPerformGetOrders(state, ownProps),
+    isPerformingGetOrders: isPerformingGetOrders(state, ownProps),
+    hasSucceededGetOrders: hasSucceededGetOrders(state, ownProps),
+    hasFailedGetOrders: hasFailedGetOrders(state, ownProps),
+    isValidGetOrders: isValidGetOrders(state, ownProps),
+
+    isCreateOrder: isCreateOrder(state, ownProps),
+    isUpdateOrder: isUpdateOrder(state, ownProps),
+    isDeleteOrder: isDeleteOrder(state, ownProps)
+  }),
+  dispatch => ({
+    CreateOrderAction: body => dispatch(CreateOrderAction({body})),
+    UpdateOrderAction: (body, urlParams) =>
+      dispatch(UpdateOrderAction({urlParams, body})),
+    DeleteOrderAction: urlParams => dispatch(DeleteOrderAction({urlParams})),
+    ResetOrder: () => dispatch(ResetOrders()),
+    GetOrdersAction: () => dispatch(GetOrdersAction()),
+  })
+)
 class Orders extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = this.initialState;
-        this.orderStatusSort = this.orderStatusSort.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = this.initialState;
+    this.orderStatusSort = this.orderStatusSort.bind(this);
+  }
+
+  get initialState() {
+    return {
+      loading: true,
+      error: null
     }
+  }
 
-    get initialState() {
-        return {
-            loading: true,
-            error: null
-        }
-    }
+  componentDidMount() {
+    // this.orderStatusSort(order);
+    this.props.GetOrdersAction()
+  }
 
-    componentDidMount() {
-        this.orderStatusSort(order);
-    }
+  orderStatusSort(data) {
+    let statusArray = {};
+    data.map((item) => {
+      statusArray[item.status] = []
+    });
+    data.map((item) => {
+      statusArray[item.status].push(item)
+    });
+    console.log(Object.keys(statusArray).sort());
+    this.setState({data: statusArray, loading: false});
+  }
 
-    orderStatusSort(data) {
-        let statusArray = {};
-        data.map((item) => {
-            statusArray[item.status] = []
-        });
-        data.map((item) => {
-            statusArray[item.status].push(item)
-        });
-        console.log(Object.keys(statusArray).sort());
-        this.setState({data: statusArray,loading: false});
-    }
+  noOrder() {
+    return (
+      <div id="body-container" className="animsition dashboard-page">
 
-    noOrder() {
-        return (
-            <div id="body-container" className="animsition dashboard-page">
+        <PageTitle>
+          Заказыы
+          <div className="float-right" style={{
+            margin: "-4px 0 0 0",
+            float: 'right'
+          }}>
+            <ModalOrderCreate/>
+          </div>
+        </PageTitle>
 
-                <PageTitle>
-                    Заказыы
-                    <div className="float-right" style={{
-                        margin: "-4px 0 0 0",
-                        float: 'right'
-                    }}>
-                        <ModalOrderCreate/>
-                    </div>
-                </PageTitle>
-
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="panel panel-default">
-                            <div className="panel-body">
-                                <h3>У вас нет заказов.</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                <h3>У вас нет заказов.</h3>
+              </div>
             </div>
-        )
-    }
+          </div>
+        </div>
 
-    render() {
+      </div>
+    )
+  }
 
-        const {data,loading,error} = this.state;
-        if(loading) {
-            return (<div>loading...</div>)
-        }
-        if(error) {
-            return (<div>error</div>)
-        }
-        if(!data){
-            return this.noOrder();
-        }
-        return (
-            <div id="body-container" className="animsition dashboard-page">
+  render() {
 
-                <PageTitle>
-                    Заказы
-                    <div className="float-right" style={{
-                        margin: "-4px 0 0 0",
-                        float: 'right'
-                    }}>
-                        <ModalOrderCreate/>
-                    </div>
-                </PageTitle>
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="panel panel-default">
-                            <div className="panel-body">
-                                <Tabs data={data}/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    const {orders, hasSucceededGetOrders,hasFailedGetOrders} = this.props;
+    console.log('orders:',this.props);
+    console.log('orders hasFailedGetOrders:',hasFailedGetOrders);
+    console.log('orders hasSucceededGetOrders:',hasSucceededGetOrders);
+    console.log('orders orders:',orders);
 
+    return (
+      <div id="body-container" className="animsition dashboard-page">
+
+        <PageTitle>
+          Заказы
+          <div className="float-right" style={{
+            margin: "-4px 0 0 0",
+            float: 'right'
+          }}>
+            <ModalOrderCreate/>
+          </div>
+        </PageTitle>
+        <div className="row">
+          <div className="col-sm-12">
+            <div className="panel panel-default">
+              <div className="panel-body">
+                {
+                  !hasSucceededGetOrders && <div>loading...</div>
+                }
+                {
+                  hasFailedGetOrders && <div>Ошибка</div>
+                }
+                {
+                  !orders.length && this.noOrder()
+                }
+                {hasSucceededGetOrders && <OrdersTabs orders={orders}/>}
+              </div>
             </div>
-        )
-    }
+          </div>
+        </div>
+
+      </div>
+    )
+  }
 }
 
 Orders.propTypes = {};
