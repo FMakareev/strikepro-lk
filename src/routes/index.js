@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Router, Route, Switch} from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory';
 
 import {LayoutMain} from "../containers/layout-main";
 import {LayoutAuth} from "../containers/layout_auth";
@@ -10,13 +9,12 @@ import {Register} from "./registration/register";
 import {RegistrationType} from "./registration-type/registration-type";
 
 import {Shops} from "./shops/shops";
-import {PageNotFound} from "./404/page-not-found";
 import {PageError} from './error/page-error'
 import {Orders} from "./orders/orders";
-import {OrdersEditor} from "./orders/orders-editor";
 import {Catalog} from "./catalog/catalog";
 import {BrowserHistory} from "../history";
 import InternalServerError from "./InternalServerError/InternalServerError";
+import OrderPage from "./order";
 
 const AuthRoute = ({component: Component, ...rest}) => {
     return (
@@ -51,10 +49,11 @@ export class RouterWrapper extends Component {
                         <MainRoute exact path="/" name="Главная" component={LayoutMain}/>
                         <MainRoute exact path="/stores" name="Магазины" component={Shops}/>
 
-                        <MainRoute exact path="/order" name="Заказы" component={Orders}/>
-                        <MainRoute exact path="/order/:id" name="Редактор заказа" component={OrdersEditor}/>
+                        <MainRoute exact path="/orders" name="Заказы" component={Orders}/>
+                        <MainRoute exact path="/order/:id" name="Редактор заказа" component={OrderPage}/>
 
                         <MainRoute exact path="/catalog" name="Каталог" component={Catalog}/>
+                        <MainRoute exact path="/catalog/:id" name="Каталог" component={Catalog}/>
 
                         <MainRoute path="/Error" name="Ошибка" component={PageError}/>
                         <MainRoute
