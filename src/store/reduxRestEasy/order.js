@@ -1,176 +1,276 @@
-import {createResource} from "@brigad/redux-rest-easy/dist/redux-rest-easy.es";
+import {createResource} from "@brigad/redux-rest-easy";
 import {getToken} from "./networkHelpers/getToken";
 import handleStatusCode from "./networkHelpers/handleStatusCode";
+import Jsona from 'jsona';
+const dataFormatter = new Jsona();
 
 
-const order = createResource('order')({
-    getOrders: {
-        method: 'GET',
-        url: 'http://new.strikepro.ru/api/v1/orders',
-        afterHook: () => console.log('Get stores successfully'),
-        networkHelpers: {
-            getToken: getToken,
-            handleStatusCode,
-            async requestGET() {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${CurrentUser.access_token}`,
-                    },
-                };
-            },
-        },
+
+const orders = createResource('orders')({
+  getOrders: {
+    method: 'GET',
+    url: '/api/v1/orders',
+    afterHook: () => console.log('Get stores successfully'),
+    normalizer: response => {
+      console.log('getOrders response: ', response);
+      let orders = dataFormatter.deserialize(response);
+      console.log('getOrders: orders', orders);
+      if (!orders) {
+        return {}
+      }
+
+      let data = {
+        entities: {orders: {}},
+        result: orders.map(item => item.id)
+      };
+
+      orders.forEach(element => {
+        data.entities.orders[element.id] = element
+      });
+      console.log('getOrders: data', data);
+
+      return data
     },
-    getProducts:{
-        method: 'GET',
-        url: 'http://new.strikepro.ru/api/v1/order/::id',
-        networkHelpers: {
-            getToken: getToken,
-            handleStatusCode,
-            async requestGET() {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${CurrentUser.access_token}`,
-                    },
-                };
-            },
-        },
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestGET() {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+        };
+      },
     },
-    createOrder:{
-        method: 'POST',
-        url: 'http://new.strikepro.ru/api/v1/order',
-        normalizer: response => {
-            console.log('POST create response', response)
-        },
-        networkHelpers: {
-            getToken: getToken,
-            handleStatusCode,
-            async requestPOST(body) {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'POST',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${CurrentUser.access_token}`,
-                    },
-                    body: JSON.stringify(body),
-                };
-            },
-        },
+  },
+  getOrder: {
+    method: 'GET',
+    url: '/api/v1/order/::id',
+    afterHook: () => console.log('Get stores successfully'),
+    normalizer: response => {
+      console.log('getOrders response: ', response);
+      let order = dataFormatter.deserialize(response);
+      console.log('getOrders: order', order);
+      if (!order) {
+        return {}
+      }
+
+      let data = {
+        entities: {orders: {}},
+        result: [order.id]
+      };
+
+      data.entities.orders[order.id] = order;
+      console.log('getOrders: data', data);
+
+      return data
     },
-    deleteOrder: {
-        method: 'DELETE',
-        url: 'http://new.strikepro.ru/api/v1/order/::id',
-        networkHelpers: {
-            getToken: getToken,
-            handleStatusCode,
-            async requestDELETE(body) {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'DELETE',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${CurrentUser.access_token}`,
-                    },
-                    body: JSON.stringify(body),
-                };
-            },
-        },
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestGET() {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+        };
+      },
     },
-    updateOrder: {
-        method: 'PUT',
-        url: 'http://new.strikepro.ru/api/v1/orders',
-        networkHelpers: {
-            getToken: getToken,
-            handleStatusCode,
-            async requestPUT(body) {
-                let CurrentUser = await this.getToken().then(res => res);
-                return {
-                    method: 'PUT',
-                    headers: {
-                        Accept: 'application/json',
-                        Authorization: `Bearer ${CurrentUser.access_token}`,
-                    },
-                    body: JSON.stringify(body),
-                };
-            },
-        },
+  },
+  getProduct: {
+    method: 'GET',
+    url: '/api/v1/order/::id',
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestGET() {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+        };
+      },
     },
+  },
+  createOrder: {
+    method: 'POST',
+    url: '/api/v1/order',
+    normalizer: response => {
+      console.log('POST create response', response)
+    },
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestPOST(body) {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+          body: JSON.stringify(body),
+        };
+      },
+    },
+  },
+  deleteOrder: {
+    method: 'DELETE',
+    url: '/api/v1/order/::id',
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestDELETE(body) {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'DELETE',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+          body: JSON.stringify(body),
+        };
+      },
+    },
+  },
+  updateOrder: {
+    method: 'PUT',
+    url: '/api/v1/order',
+    networkHelpers: {
+      getToken: getToken,
+      handleStatusCode,
+      async requestPUT(body) {
+        let CurrentUser = await this.getToken().then(res => res);
+        return {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${CurrentUser.access_token}`,
+          },
+          body: JSON.stringify(body),
+        };
+      },
+    },
+  },
 });
 
+console.log(orders);
+
 const {
-    actions: {
-        resource: {
-            invalidate: invalidateUsers,
-            invalidateId: invalidateUser,
-            reset: ResetOrders
-        },
-        getOrders: {
-            perform: GetOrdersAction
-        },
-        createOrder: {
-            perform: CreateOrderAction
-        },
-        updateOrder: {
-            perform: UpdateOrderAction
-        },
-        deleteOrder: {
-            perform: DeleteOrderAction
-        }
+  actions: {
+    resource: {
+      invalidate: invalidateOrder,
+      invalidateId: invalidateIdOrder,
+      reset: ResetOrders
     },
-    selectors: {
-        resource: {
-            getResource: GetOrders
-        },
-        getOrders: {
-            request: {
-                getResource:    getResourceGetOrders,
-                getMetadata:    getMetadataGetOrders,
-                couldPerform:   couldPerformGetOrders,
-                isPerforming:   isPerformingGetOrders,
-                hasSucceeded:   hasSucceededGetOrders,
-                hasFailed:      hasFailedGetOrders,
-                isValid:        isValidGetOrders,
-            }
-        },
-        createOrder: {
-            request: {
-                isPerforming: isCreateOrder
-            }
-        },
-        updateOrder: {
-            request: {
-                isPerforming: isUpdateOrder
-            }
-        },
-        deleteOrder: {
-            request: {
-                isPerforming: isDeleteOrder
-            }
-        }
+    getOrders: {
+      perform: GetOrdersAction,
+    },
+    getOrder: {
+      perform: GetOrderAction,
+    },
+    getProduct: {
+      perform: getProductAction,
+    },
+    createOrder: {
+      perform: CreateOrderAction,
+    },
+    updateOrder: {
+      perform: UpdateOrderAction,
+    },
+    deleteOrder: {
+      perform: DeleteOrderAction,
     }
-} = order
+  },
+  selectors: {
+    resource: {
+      getResource: GetOrders,
+      getResourceById: GetOrderById,
+    },
+    getOrders: {
+      request: {
+        getResource: getResourceGetOrders,
+        getMetadata: getMetadataGetOrders,
+        couldPerform: couldPerformGetOrders,
+        isPerforming: isPerformingGetOrders,
+        hasSucceeded: hasSucceededGetOrders,
+        hasFailed: hasFailedGetOrders,
+        isValid: isValidGetOrders,
+      }
+    },
+    getOrder: {
+      request: {
+        getResource: getResourceGetOrder,
+        getMetadata: getMetadataGetOrder,
+        couldPerform: couldPerformGetOrder,
+        isPerforming: isPerformingGetOrder,
+        hasSucceeded: hasSucceededGetOrder,
+        hasFailed: hasFailedGetOrder,
+        isValid: isValidGetOrder,
+      }
+    },
+    createOrder: {
+      request: {
+        isPerforming: isCreateOrder
+      }
+    },
+    updateOrder: {
+      request: {
+        isPerforming: isUpdateOrder
+      }
+    },
+    deleteOrder: {
+      request: {
+        isPerforming: isDeleteOrder
+      }
+    }
+  }
+} = orders;
 
 export {
-    GetOrdersAction,
-    CreateOrderAction,
-    UpdateOrderAction,
-    DeleteOrderAction,
-    GetOrders,
-    getResourceGetOrders,
-    getMetadataGetOrders,
-    couldPerformGetOrders,
-    isPerformingGetOrders,
-    hasSucceededGetOrders,
-    hasFailedGetOrders,
-    isValidGetOrders,
-    isCreateOrder,
-    isUpdateOrder,
-    isDeleteOrder,
-    ResetOrders
+  GetOrdersAction,
+  CreateOrderAction,
+  UpdateOrderAction,
+  DeleteOrderAction,
+  GetOrders,
+  GetOrderById,
+  getResourceGetOrders,
+  getMetadataGetOrders,
+  couldPerformGetOrders,
+  isPerformingGetOrders,
+  hasSucceededGetOrders,
+  hasFailedGetOrders,
+  isValidGetOrders,
+  isCreateOrder,
+  isUpdateOrder,
+  isDeleteOrder,
+  ResetOrders,
+  invalidateOrder,
+  invalidateIdOrder,
+  getResourceGetOrder,
+  getMetadataGetOrder,
+  couldPerformGetOrder,
+  isPerformingGetOrder,
+  hasSucceededGetOrder,
+  hasFailedGetOrder,
+  isValidGetOrder,
+  GetOrderAction,
+  getProductAction,
+
 }
