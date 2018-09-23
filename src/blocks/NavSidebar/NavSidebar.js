@@ -58,10 +58,10 @@ export class NavSidebar extends Component {
                                         </Link>
                                     </li>
                                 </NavItem>
-                                <NavItem icon={"shopping-cart"} link={'/order'}>
+                                <NavItem icon={"shopping-cart"}  link={'/orders'} >
                                     <li>
                                         <Link to={{
-                                            pathname: '/order'
+                                            pathname: '/orders'
                                         }}>
                                             Заказы
                                         </Link>
