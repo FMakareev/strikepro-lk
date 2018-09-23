@@ -5,7 +5,7 @@ import {CarrierOptionsSchema} from "./schemas/CarrierOptionsSchema";
 export const CarrierOptions = createResource('options', {cacheLifetime: 30})({
     options: {
         method: 'GET',
-        url: 'http://new.strikepro.ru/api/v1/carrier/options',
+        url: '/api/v1/carrier/options',
         afterHook: () => console.log('Get carrier successfully'),
         normalizer: ({data}) => normalize(data, CarrierOptionsSchema),
 
