@@ -80,28 +80,14 @@ class Orders extends Component {
 
   noOrder() {
     return (
-      <div id="body-container" className="animsition dashboard-page">
-
-        <PageTitle>
-          Заказыы
-          <div className="float-right" style={{
-            margin: "-4px 0 0 0",
-            float: 'right'
-          }}>
-            <ModalOrderCreate/>
-          </div>
-        </PageTitle>
-
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="panel panel-default">
-              <div className="panel-body">
-                <h3>У вас нет заказов.</h3>
-              </div>
+      <div className="row">
+        <div className="col-sm-12">
+          <div className="panel panel-default">
+            <div className="panel-body">
+              <h3>У вас нет заказов.</h3>
             </div>
           </div>
         </div>
-
       </div>
     )
   }
@@ -126,20 +112,21 @@ class Orders extends Component {
             <ModalOrderCreate/>
           </div>
         </PageTitle>
+
         <div className="row">
           <div className="col-sm-12">
             <div className="panel panel-default">
               <div className="panel-body">
                 {
-                  !hasSucceededGetOrders && <div>loading...</div>
+                  !hasSucceededGetOrders && <div>Загрузка...</div>
                 }
                 {
                   hasFailedGetOrders && <div>Ошибка</div>
                 }
                 {
-                  !orders.length && this.noOrder()
+                  hasSucceededGetOrders && !hasFailedGetOrders && !orders.length && this.noOrder()
                 }
-                {hasSucceededGetOrders && <OrdersTabs orders={orders}/>}
+                {hasSucceededGetOrders && !hasFailedGetOrders  &&  orders.length > 0 && <OrdersTabs orders={orders}/>}
               </div>
             </div>
           </div>

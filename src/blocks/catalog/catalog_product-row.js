@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {updateProduct} from "../../store/reducers/shopping_cart/actions";
-import ReactImageMagnify from 'react-image-magnify';
 import {Store} from '../../store/store';
-import ImageZoom from 'react-medium-image-zoom'
+import ReactImageMagnify from 'react-image-magnify';
+import {imageMock} from "./imageMock";
+
+
 
 
 @connect(
@@ -37,13 +39,38 @@ export class CatalogProductRow extends Component {
     this.addProduct = this.addProduct.bind(this);
     this.removeProduct = this.removeProduct.bind(this);
     this.updateProduct = this.updateProduct.bind(this);
+    this.updateHeightImage = this.updateHeightImage.bind(this)
+
   }
+
 
   get initialState() {
-    return {}
+    return {
+      smallImageHeight: "auto",
+      smallImageWidth: "auto",
+
+    };
   }
 
+  updateHeightImage(){
+    const { product } = this.props;
+    const $this = this;
+    const img = document.getElementsByClassName('imageClassName' + product.id)[0];
 
+    img.addEventListener('load', function(){
+      const Height = this.clientHeight;
+      const Width = this.clientWidth;
+
+      $this.setState({
+        smallImageWidth: 100,
+        smallImageHeight: Height / (Width / 100),
+      });
+    })
+
+  }
+  componentDidMount() {
+    this.updateHeightImage();
+  }
   isNumber = value => value && isNaN(Number(value));
 
   updateProduct(event) {
@@ -72,30 +99,34 @@ export class CatalogProductRow extends Component {
   }
 
   render() {
-    const {product, shopping_cart: {order, load, error, success}} = this.props;
-
+    const { product, shopping_cart: { order, load, error, success }, index} = this.props;
+    console.log(this.state);
     return (<tr>
       <td width="100">{product.id}</td>
       <td>{product.code}</td>
       <td>
-
-        <ImageZoom
-          image={{
-            src: 'https://picsum.photos/200',
-            alt: 'Golden Gate Bridge',
-            className: 'img',
-            style: {width: '5em'}
-          }}
-          zoomImage={{
-            src: 'https://picsum.photos/600',
-            alt: 'Golden Gate Bridge'
-          }}
-        />
+        <ReactImageMagnify
+          imageClassName={"imageClassName" + product.id}
+		      enlargedImageContainerDimensions={{width: '300%', height: '300%'}}
+		      {...{
+			      smallImage: {
+				      alt: 'Wristwatch by Ted Baker London',
+				      isFluidWidth: false,
+              src: imageMock[index].small,
+              width: this.state.smallImageWidth,
+              height: this.state.smallImageHeight,
+			      },
+			      largeImage: {
+				      alt: '',
+              src: imageMock[index].big,
+				      width: 1200,
+				      height: 1800
+			      },
+			      isHintEnabled: false
+		      }}/>
 
       </td>
       <td>{product.name}</td>
-      <td>{product.unit}</td>
-      <td>{product.manufacturers}</td>
       <td>{product.price.price}
       </td>
       <td>{product.balance}</td>

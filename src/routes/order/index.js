@@ -1,16 +1,28 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {PageTitle} from "../../blocks/PageTitle/PageTitle";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { PageTitle } from '../../blocks/PageTitle/PageTitle'
 import {
-  couldPerformGetOrders, CreateOrderAction,
-  DeleteOrderAction, getMetadataGetOrders, GetOrderAction, GetOrderById, GetOrders,
-  GetOrdersAction, getResourceGetOrders,
+  couldPerformGetOrders,
+  CreateOrderAction,
+  DeleteOrderAction,
+  getMetadataGetOrders,
+  GetOrderAction,
+  GetOrderById,
+  GetOrders,
+  GetOrdersAction,
+  getResourceGetOrders,
   hasFailedGetOrder,
-  hasSucceededGetOrder, isCreateOrder, isDeleteOrder, isPerformingGetOrders, isUpdateOrder,
+  hasSucceededGetOrder,
+  isCreateOrder,
+  isDeleteOrder,
+  isPerformingGetOrders,
+  isUpdateOrder,
   isValidGetOrders,
-  ResetOrders, UpdateOrderAction
-} from "../../store/reduxRestEasy/order";
-import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
+  ResetOrders,
+  UpdateOrderAction
+} from '../../store/reduxRestEasy/order'
+import { Link } from 'react-router-dom'
+import { connect as connectRestEasy } from '@brigad/redux-rest-easy'
 
 // import {order} from './orders';
 
@@ -31,22 +43,21 @@ import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
     isDeleteOrder: isDeleteOrder(state, ownProps)
   }),
   dispatch => ({
-    CreateOrderAction: body => dispatch(CreateOrderAction({body})),
-    UpdateOrderAction: (body, urlParams) =>
-      dispatch(UpdateOrderAction({urlParams, body})),
-    DeleteOrderAction: urlParams => dispatch(DeleteOrderAction({urlParams})),
+    CreateOrderAction: body => dispatch(CreateOrderAction({ body })),
+    UpdateOrderAction: body => dispatch(UpdateOrderAction(body)),
+    DeleteOrderAction: urlParams => dispatch(DeleteOrderAction({ urlParams })),
     ResetOrder: () => dispatch(ResetOrders()),
-    GetOrderAction: (urlParams) => dispatch(GetOrderAction({urlParams})),
+    GetOrderAction: urlParams => dispatch(GetOrderAction({ urlParams }))
   })
 )
 class OrderPage extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = this.initialState;
+  constructor (props) {
+    super(props)
+    this.state = this.initialState
+    this.changeOrderStatus = this.changeOrderStatus.bind(this)
   }
 
-  get initialState() {
+  get initialState () {
     return {
       id: this.props.match.params.id,
       product: null,
@@ -54,87 +65,152 @@ class OrderPage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     console.log(this.props);
-    const {match: {params}} = this.props;
-    this.props.GetOrderAction({id: params.id})
+    const { match: { params } } = this.props;
+    this.props
+      .GetOrderAction({ id: params.id })
+      .then(response => {
+        console.log('response: ', response);
+
+        // this.props.GetOrderById(params.id).then(response => {
+        //   console.log('response: ', response)
+        //
+        //  }).catch(error => {
+        //   console.log('error: ', error)
+        // })
+      })
+      .catch(error => {
+        console.log('error: ', error)
+      })
   }
 
+  changeOrderStatus () {
+    const { match: { params } } = this.props;
 
-  renderRow(item, index) {
-    console.log((parseFloat(item.price.price) * parseFloat(item.total)).toFixed(2));
+    this.props
+      .UpdateOrderAction({
+        body: {
+          id: params.id,
+          status: 'PROCESSING'
+        }
+      })
+      .then(response => {
+        console.log('response: ', response);
+        this.props.GetOrderAction({ id: params.id })
+      })
+      .catch(error => {
+        console.log('error: ', error)
+      })
+  }
+
+  renderRow (item, index) {
+    console.log(
+      (parseFloat(item.price.price) * parseFloat(item.total)).toFixed(2)
+    );
     return (
       <tr key={index}>
-        <td>{item.article}</td>
+        <td>{item.id}</td>
         <td>{item.code}</td>
         <td>
-          <img src="{product.image.thumb_image}" alt="" width="60"
-               height="40"/>
+          <img
+            src='{product.image.thumb_image}'
+            alt=''
+            width='60'
+            height='40'
+          />
         </td>
         <td>{item.name}</td>
-        <td>{item.unit}</td>
-        <td>{item.manufacturers}</td>
-        <td style={{whiteSpace: 'nowrap'}}>{item.price.price} <i className="fa fa-rub" aria-hidden="true"/></td>
+        <td style={{ whiteSpace: 'nowrap' }}>
+          {item.price.price} <i className='fa fa-rub' aria-hidden='true' />
+        </td>
         <td>{item.balance}</td>
         <td> {item.count} </td>
-        <td style={{whiteSpace: 'nowrap'}}>{(parseFloat(item.price.price) * parseFloat(item.total)).toFixed(2)} <i className="fa fa-rub" aria-hidden="true"/></td>
+        <td style={{ whiteSpace: 'nowrap' }}>
+          {(parseFloat(item.price.price) * parseFloat(item.total)).toFixed(2)}
+          {' '}
+          <i className='fa fa-rub' aria-hidden='true' />
+        </td>
         <td>
-          <button type="button" className="btn__control">
-            <i className="fa fa-trash" aria-hidden="true"></i>
+          <button type='button' className='btn__control'>
+            <i className='fa fa-trash' aria-hidden='true' />
           </button>
         </td>
       </tr>
     )
   }
 
-  render() {
-    const {orders, hasSucceededGetOrder, hasFailedGetOrder} = this.props;
+  render () {
+    const {
+      orders,
+      hasSucceededGetOrder,
+      hasFailedGetOrder,
+      match: { params }
+    } = this.props;
     console.log('OrderPage: ', this.props);
+
     return (
-      <div id="body-container" className="animsition dashboard-page">
+      <div id='body-container' className='animsition dashboard-page'>
 
         <PageTitle>
-          Заказ № {hasSucceededGetOrder && orders[0].id}
+          Заказ № {hasSucceededGetOrder && params.id}
+          {hasSucceededGetOrder &&
+            orders[0].status === 'ACTIVE' &&
+            <div
+              className='float-right'
+              style={{
+                margin: '-4px 0 0 0',
+                float: 'right'
+              }}
+            >
+              <button
+                className={'btn btn-success'}
+                onClick={() => this.changeOrderStatus()}
+              >
+                Обновить статус
+              </button>
+              <Link
+                className={'btn btn-success'}
+                to={{
+                  pathname: '/catalog/' + orders[0].id
+                }}
+              >
+                В каталог
+              </Link>
+            </div>}
         </PageTitle>
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="panel panel-default">
-              <div className="panel-body ">
-                {
-                  !hasSucceededGetOrder && (
-                    <h2>Loading</h2>
-                  )
-                }
-                {
-                  hasSucceededGetOrder && (
-                    <table className="table table-bordered" style={{
+        <div className='row'>
+          <div className='col-sm-12'>
+            <div className='panel panel-default'>
+              <div className='panel-body '>
+                {!hasSucceededGetOrder && <h2>Loading</h2>}
+                {hasSucceededGetOrder &&
+                  <table
+                    className='table table-bordered'
+                    style={{
                       border: 'none'
-                    }}>
-                      <thead>
+                    }}
+                  >
+                    <thead>
                       <tr>
-                        <th width="100">Артикул</th>
-                        <th width="100">Код</th>
+                        <th width='100'>Код</th>
+                        <th width='100'>Артикул</th>
                         <th>Изображение</th>
                         <th>Название</th>
-                        <th width="80">Ед.</th>
-                        <th>Страна</th>
                         <th>Цена</th>
-                        <th width="80">Остаток</th>
-                        <th width="150">Кол-во</th>
-                        <th width="140">Общая стоимость</th>
-                        <th width="50"></th>
+                        <th width='80'>Остаток</th>
+                        <th width='150'>Кол-во</th>
+                        <th width='140'>Общая стоимость</th>
+                        <th width='50' />
                       </tr>
-                      </thead>
-                      <tbody>
-                      {
-                        orders && orders[0].products.map((item, index) => {
-                          return this.renderRow(item, index);
-                        })
-                      }
-                      </tbody>
-                    </table>
-                  )
-                }
+                    </thead>
+                    <tbody>
+                      {orders &&
+                        orders[0].products.map((item, index) => {
+                          return this.renderRow(item, index)
+                        })}
+                    </tbody>
+                  </table>}
               </div>
             </div>
           </div>
@@ -144,8 +220,8 @@ class OrderPage extends Component {
   }
 }
 
-OrderPage.propTypes = {};
+OrderPage.propTypes = {}
 
-OrderPage.defaultProps = {};
+OrderPage.defaultProps = {}
 
-export default OrderPage;
+export default OrderPage

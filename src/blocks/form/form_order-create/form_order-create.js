@@ -18,7 +18,7 @@ import {
   DeleteOrderAction,
   hasSucceededGetOrders,
   hasFailedGetOrders,
-
+  GetOrdersAction,
   isCreateOrder,
   isUpdateOrder,
   isDeleteOrder,
@@ -44,6 +44,8 @@ import {
       dispatch(UpdateOrderAction({urlParams, body})),
     DeleteOrderAction: urlParams => dispatch(DeleteOrderAction({urlParams})),
     GetStoreAction: () => dispatch(GetStoreAction()),
+    GetOrdersAction: () => dispatch(GetOrdersAction()),
+
     ResetOrder: () => dispatch(ResetOrders())
   })
 )
@@ -77,7 +79,9 @@ export class FormOrderCreate extends Component {
       .then((response) => {
         console.log(response);
         this.props.reset();
+        this.props.GetOrdersAction();
         this.props.closeForm();
+
       }).catch(error => {
       console.log(error);
     })

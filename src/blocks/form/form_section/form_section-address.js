@@ -6,10 +6,10 @@ import {maxLength255, required} from "../form_register/form_registration-validat
 
 
 const types = [{
-    label: 'Юридический адрес (ФИАС)',
+    label: 'Юридический адрес',
     type: 'LEGAL'
 }, {
-    label: 'Фактический адрес (ФИАС)',
+    label: 'Фактический адрес',
     type: 'POSTAL'
 },];
 
@@ -35,7 +35,7 @@ export class FormSectionAddress extends Component {
         return (
             <FormGroup>
                 {types.map((option, index) => (
-                    <div className="col-md-6" key={index}>
+                    <div className="col-xl-12" key={index}>
                         {
                             index !== 1 &&
                             <Field
@@ -51,7 +51,7 @@ export class FormSectionAddress extends Component {
                             index === 1 && !disabledCheckbox &&
                             <Field
                                 name={`places[${index}].address`}
-                                type="text"
+                                type={"text"}
                                 component={InputText}
                                 label={types[index].label}
                                 validate={[required, maxLength255,]}
@@ -62,7 +62,7 @@ export class FormSectionAddress extends Component {
                             index === 1 && disabledCheckbox &&
                             <Field
                                 name={`places[${index}].address`}
-                                type="text"
+                                type={"text"}
                                 component={InputText}
                                 label={types[index].label}
                                 disabled={index === 1 ? disabledCheckbox : false}

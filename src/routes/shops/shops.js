@@ -108,11 +108,7 @@ class Shops extends Component {
             <StoreEdit className='modal-lg' buttonLabel={'Добавить магазин'} />
           </div>
         </PageTitle>
-        <div className="row">
-          <div className='panel panel-default'>
-          </div>
-          </div>
-
+     
         <div className='row'>
           {store &&
             Object.values(store).map((item, index) => (

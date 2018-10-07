@@ -9,7 +9,7 @@ const FormSectionEmail = () => (
     <fieldset className="animated fadeIn card-block">
         <Row>
             <Col className="col-md-12">
-                <FieldArray name="email" component={FormArrayEmail}/>
+                <FieldArray name={"email"} component={FormArrayEmail}/>
             </Col>
         </Row>
     </fieldset>

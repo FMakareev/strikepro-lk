@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FormAuth} from "../../blocks/form/form_auth/form_auth";
-
+import logo from '../../assets/images/logo.png';
 
 /*
 * http://reactnative.vn/create-redux-middle-ware-to-refresh-token-in-react-native-app/
@@ -12,31 +12,36 @@ import {FormAuth} from "../../blocks/form/form_auth/form_auth";
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = this.initialState;
-    }
+	constructor(props) {
+		super(props);
+		this.state = this.initialState;
+	}
 
-    get initialState() {
-        return {}
-    }
+	get initialState() {
+		return {}
+	}
 
-    render() {
-        return (
-            <div className="row">
-                <div className="col-md-4 col-lg-4 col-md-offset-4 col-lg-offset-4">
+	render() {
+		return (
+			<div className="row">
+				<div className="col-md-4 col-md-offset-4">
+					<div className="card">
+						<div className="card-block">
+							<a className="hvr-pulse-grow">
+								<img src={logo} style={{maxWidth: '200px'}}/>
+							</a>
 
-                    <a className="hvr-pulse-grow">
-                        <img src="images/flat-avatar.png" className="user-avatar"/>
-                    </a>
+							<h1>
+								Strikepro
+							</h1>
+							<FormAuth/>
+						</div>
+					</div>
 
-                    <h1>Strikepro</h1>
-
-                    <FormAuth/>
-                </div>
-            </div>
-        )
-    }
+				</div>
+			</div>
+		)
+	}
 }
 
 Login.propTypes = {};

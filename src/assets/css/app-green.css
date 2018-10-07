@@ -6258,9 +6258,9 @@ a.bg-danger:focus, a.bg-danger:hover {
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #27ae60;
+    /*background: #27ae60;*/
     text-align: center;
-    color: #fff;
+    /*color: #fff;*/
     padding: 3em;
 }
 
@@ -9783,6 +9783,19 @@ to prevent collapsing during animation*/
         float: right;
         display: inline-block !important;
     }
+}
+
+.border-none {
+    border: none !important;
+}
+.box-shadow-none {
+    box-shadow: none !important;
+}
+.padding-none {
+    padding: 0 !important;
+}
+.margin-none {
+    padding: 0 !important;
 }
 
 /*# sourceMappingURL=app-green.css.map */

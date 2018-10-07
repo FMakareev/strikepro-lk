@@ -18,23 +18,12 @@ export const isNumber = value =>
 
 
 export const webSite = value => {
+	const pattern = new RegExp('^(http:\\/\\/www\\.|https:\\/\\/www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$'); // fragment locator
 
-    const protocol = new RegExp('^(https?:\\/\\/)');
 
-    if (!protocol.test(value)) {
-        return 'Адрес должен начинатся на http:// или https://.'
-    }
-
-    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-
-    return pattern.test(value) ? undefined : 'Некоректный адресс.';
-
+	return pattern.test(value) ? undefined : 'Некоректный адресс.';
 };
+
 
 export const isEmail = value => {
     const reg = new RegExp(/^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i);

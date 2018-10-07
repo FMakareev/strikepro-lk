@@ -53,9 +53,7 @@ export class CatalogContent extends Component {
             <th width="100">Артикул</th>
             <th width="100">Код</th>
             <th>Изображение</th>
-            <th>Название</th>
-            <th width="100">Ед.</th>
-            <th>Страна</th>
+            <th>Название</th>    
             <th>Цена</th>
             <th width="100">Остаток</th>
             <th width="120">
@@ -91,6 +89,7 @@ export class CatalogContent extends Component {
               {products.map((item, index) => <CatalogProductRow
                 key={index}
                 product={item}
+                index={index}
               />)}
             </InfiniteScroll>
           }

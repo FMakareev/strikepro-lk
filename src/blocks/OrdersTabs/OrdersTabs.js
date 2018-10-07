@@ -121,7 +121,6 @@ export class OrdersTabs extends Component {
                       <th>Дата обновления</th>
                       <th>Номер заказа</th>
                       <th>Магазин</th>
-                      <th>Статус заказа</th>
                       <th>Сумма заказа</th>
                       <th>Кол-во позиций/Кол-во товаров</th>
                       <th>Подробности</th>
@@ -136,12 +135,7 @@ export class OrdersTabs extends Component {
                           <td>{item.created_at.date}</td>
                           <td>{item.updated_at.date}</td>
                           <td>{item.id}</td>
-                          <td>{item.store_id}</td>
-                          <td>{StatusOrder.map((status, index) => {
-                            if (index === this.state.activeTab) {
-                              return status.label
-                            }
-                          })}</td>
+                          <td>{item.store_id}</td>                          
                           <td>{item.totalPrice} {' '}
                             <i className="fa fa-rub" aria-hidden="true"/>
                           </td>
