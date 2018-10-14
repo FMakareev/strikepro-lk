@@ -148,12 +148,8 @@ export class FormRegister extends Component {
 		const {
 			error,
 			handleSubmit,
-			pristine,
-			reset,
-			submitting,
-			roles,
 			type
-		} = this.props
+		} = this.props;
 		console.log(this.props)
 		return (
 			<form
