@@ -103,19 +103,25 @@ export const updateProduct = (state, product, count) => {
 			try {
 				return new Promise((resolve, reject) => {
 					dispatch(UpdateOrderAction({body: order}))
-						.then((response) => {
-							console.log(response);
-							dispatch({
-								type: SHOPPING_CART_ADD_SUCCESS,
-								payload: {
-									order
+						.then(({normalizedPayload}) => {
+							console.log('UpdateOrderAction: ',normalizedPayload);
+							if(normalizedPayload.message){
+								throw {
+									message: normalizedPayload.message,
 								}
-							});
-							dispatch({
-								type: UPDATE_PRODUCT,
-								payload: catalog_products
-							});
-							resolve(true)
+							} else {
+								dispatch({
+									type: SHOPPING_CART_ADD_SUCCESS,
+									payload: {
+										order
+									}
+								});
+								dispatch({
+									type: UPDATE_PRODUCT,
+									payload: catalog_products
+								});
+								resolve(true)
+							}
 						}).catch(error => {
 						console.log(error);
 						reject(error);
