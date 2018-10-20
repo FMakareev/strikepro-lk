@@ -20,7 +20,8 @@ export default {
                 display: 'block'
             },
             activeLink: {
-                background: '#ffffff'
+	              background: 'transparent',
+                fontWeight: 'bold',
             },
             toggle: {
                 base: {

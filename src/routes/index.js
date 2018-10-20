@@ -74,7 +74,7 @@ export class RouterWrapper extends Component {
             <AuthRoute exact path='/login' name={'Вход'} component={Login} />
             <AuthRoute exact path='/logout' name={'Выход'} component={Logout} />
 
-            <MainRoute exact path='/' name={'Главная'} component={LayoutMain} />
+            <MainRoute exact path='/' name={'Магазины'} component={Shops} />
             <MainRoute
               exact
               path='/stores'

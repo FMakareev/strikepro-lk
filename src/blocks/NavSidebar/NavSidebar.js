@@ -37,17 +37,17 @@ export class NavSidebar extends Component {
           <div className='side-menu'>
             <div className='menu-body'>
               <ul className='nav nav-pills nav-stacked sidenav'>
-                <NavItem icon={'home'} link={'/'}>
-                  <li>
-                    <Link
-                      to={{
-                        pathname: '/'
-                      }}
-                    >
-                      Главная
-                    </Link>
-                  </li>
-                </NavItem>
+                {/*<NavItem icon={'home'} link={'/'}>*/}
+                  {/*<li>*/}
+                    {/*<Link*/}
+                      {/*to={{*/}
+                        {/*pathname: '/'*/}
+                      {/*}}*/}
+                    {/*>*/}
+                      {/*Главная*/}
+                    {/*</Link>*/}
+                  {/*</li>*/}
+                {/*</NavItem>*/}
                 <NavItem icon={'list'} link={'/catalog'}>
                   <li>
                     <Link
@@ -84,23 +84,23 @@ export class NavSidebar extends Component {
                   </li>
                 </NavItem>
 
-                <NavItem icon={'user'} link={'/profile'}>
-                  <li>
-                    <Link
-                      to={{
-                        pathname: '/profile'
-                      }}
-                    >
-                      Профиль
-                    </Link>
+                {/*<NavItem icon={'user'} link={'/profile'}>*/}
+                  {/*<li>*/}
+                    {/*<Link*/}
+                      {/*to={{*/}
+                        {/*pathname: '/profile'*/}
+                      {/*}}*/}
+                    {/*>*/}
+                      {/*Профиль*/}
+                    {/*</Link>*/}
 
-                  </li>
-                </NavItem>
+                  {/*</li>*/}
+                {/*</NavItem>*/}
 
-                <ModalFeedback
-                  icon={'support'}
-                  buttonLabel={'Тех. поддержка'}
-                />
+                {/*<ModalFeedback*/}
+                  {/*icon={'support'}*/}
+                  {/*buttonLabel={'Тех. поддержка'}*/}
+                {/*/>*/}
 
                 {/* <NavItem icon={"support"} onClick={this.onSupport}> */}
                 {/* <li> */}
