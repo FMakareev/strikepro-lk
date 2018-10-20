@@ -30,7 +30,7 @@ class Header extends Component {
                     &#9776;
                 </button>
 
-                <Link className="navbar-brand" to="/">Ani Laravel</Link>
+                <Link className="navbar-brand" to="/">StrikePro: Partner</Link>
 
                 <div className="collapse navbar-toggleable-xs text-xs-left" id="bs-example-navbar-collapse-1">
                     <ul className="nav navbar-nav pull-xs-right" style={{
