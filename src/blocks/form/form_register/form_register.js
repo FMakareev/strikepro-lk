@@ -69,32 +69,55 @@ export class FormRegister extends Component {
 		return {}
 	}
 
-	transformValue(data) {
-		const value = Object.assign({}, data)
 
-		console.log('transformValue: ', value)
+	filterMainContact = (value, isMain) => {
+		let IsMain = isMain;
+		if(IsMain) {
+			IsMain = (IsMain.substring(IsMain.indexOf('[')));
+			IsMain = IsMain.substring(1, IsMain.indexOf(']'));
+			value = value.map((item) => {
+				item.is_main = false;
+				return item;
+			});
+			value[IsMain].is_main = true;
+		}
+		return value;
+	}
+
+	transformValue(data) {
+		const value = Object.assign({}, data);
+
+		console.log('transformValue: ', value);
+
+		value.company.email = this.filterMainContact(value.company.email, value.company.email_main);
+		value.company.phone = this.filterMainContact(value.company.phone, value.company.phone_main);
+
+
 
 		value.company.contacts = [
 			...(value.company.phone ? value.company.phone : null),
 			...(value.company.email ? value.company.email : null)
-		]
+		];
 
-		console.log('transformValue: ', value)
+		console.log('transformValue: ', value);
 		if (value.company.email) {
 			delete value.company.email
+		}
+		if (value.company.email_main) {
+			delete value.company.email_main
 		}
 		if (value.company.phone) {
 			delete value.company.phone
 		}
 
-		console.log('transformValue: ', value)
+		console.log('transformValue: ', value);
 
 		if (value.company.places[1].isActive) {
-			value.company.places[1].value = value.company.places[0].value
+			value.company.places[1].value = value.company.places[0].value;
 			delete value.company.places[1].isActive
 		}
 
-		console.log('transformValue: ', value)
+		console.log('transformValue: ', value);
 
 		return value
 	}

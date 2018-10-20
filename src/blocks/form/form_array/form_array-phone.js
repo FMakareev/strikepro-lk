@@ -1,12 +1,42 @@
 import React from 'react';
-import {Field} from 'redux-form'
+import { Field, getFormValues } from 'redux-form'
 import {InputText} from "../../Input/InputText/InputText";
 import {InputCheckbox} from "../../Input/InputCheckbox/InputCheckbox";
-import {isNumber, maxLength255, required} from "../form_register/form_registration-validate"; // ES6
+import {isNumber, maxLength255, required} from "../form_register/form_registration-validate";
+import { connect } from "react-redux";
+import { FormGroup, Input, Label } from "reactstrap"; // ES6
 
 // TODO: отрефакторить CSS
 // TODO: Сделать универсальный компонент, такой же компонент FormArrayEmail
 
+
+
+export let InputRadioCheckbox = function ({input, label, type, disabled, meta: {touched, error}, currentValue, values, ...rest}) {
+	console.log('InputRadioCheckbox input: ', input);
+	console.log('InputRadioCheckbox currentValue:', currentValue);
+	console.log('InputRadioCheckbox values:', values);
+
+	return (
+		<FormGroup>
+			<Label>
+				<Input type={'radio'} {...input} onChange={() => {
+					if (values.company.phone_main !== currentValue) {
+						input.onChange(currentValue);
+					}
+				}}
+				       disabled={disabled}
+				       checked={values.company.phone_main === currentValue}
+
+				/> {' '}
+				{label}
+			</Label>
+			<p className="help-block">{touched && error && <span>{error}</span>}</p>
+		</FormGroup>
+	)
+};
+InputRadioCheckbox = connect(state => ({
+	values: getFormValues('FormRegister')(state),
+}))(InputRadioCheckbox);
 
 const renderSubFields = (member, index, fields) => {
 
@@ -44,12 +74,13 @@ const renderSubFields = (member, index, fields) => {
             />
 
             <div className="form-inline">
-                <Field
-                    name={`${member}.is_main`}
-                    component={InputCheckbox}
-                    type="checkbox"
-                    label="Желаемый вид связи"
-                />
+	            <Field
+		            name={`phone_main`}
+		            component={InputRadioCheckbox}
+		            type={"checkbox"}
+		            currentValue={`${member}.is_main`}
+		            label={'Желаемый вид связи'}
+	            />
             </div>
         </div>
     )

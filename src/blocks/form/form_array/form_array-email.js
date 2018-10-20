@@ -1,41 +1,52 @@
 import
-	React, {Component} from 'react';
-import {Field, getFormValues} from 'redux-form'
-import {InputText} from "../../Input/InputText/InputText";
-// import {InputCheckbox} from "../../Input/InputCheckbox/InputCheckbox";
-import {isEmail, maxLength255, required} from "../form_register/form_registration-validate";
-import {FormGroup, Input, Label} from "reactstrap";
-import {connect} from "react-redux"; // ES6
+	React, { Component } from 'react';
+import { Field, getFormValues } from 'redux-form'
+import { InputText } from "../../Input/InputText/InputText";
+import { isEmail, maxLength255, required } from "../form_register/form_registration-validate";
+import { FormGroup, Input, Label } from "reactstrap";
+import { connect } from "react-redux"; // ES6
 
-function mapStateToProps(state) {
-	return {
-		values: getFormValues('FormRegister')(state),
-	}
-}
 
-// @connect(mapStateToProps)
-export let InputCheckbox = function({input, label, type,disabled, meta: {touched, error},values, ...rest}){
-	// console.log('InputCheckbox: ',values.company.email);
-	// console.log('InputCheckbox: ',input.name);
-	// let name = input.name.substring(input.name.indexOf('['), input.name.length);
-	// console.log('InputCheckbox: ', name);
-	// values.company.email.map((item, index) => {
-	// 	if(name.indexOf('['+index+']') === 0){
-	// 		console.log(item);
-	// 	}
-	// });
-	// values.company.email
+export const InputCheckbox = function ({input, label, type, disabled, meta: {touched, error}, value, values, ...rest}) {
+
 	return (
 		<FormGroup>
 			<Label>
-				<Input type={type} {...input} disabled={disabled}/> {' '}
+				<Input type={type} {...input} onChange={() => input.onChange('test')} disabled={disabled}/> {' '}
 				{label}
 			</Label>
 			<p className="help-block">{touched && error && <span>{error}</span>}</p>
 		</FormGroup>
 	)
 };
-InputCheckbox =connect(mapStateToProps)(InputCheckbox);
+
+export let InputRadioCheckbox = function ({input, label, type, disabled, meta: {touched, error}, currentValue, values, ...rest}) {
+	console.log('InputRadioCheckbox input: ', input);
+	console.log('InputRadioCheckbox currentValue:', currentValue);
+	console.log('InputRadioCheckbox values:', values);
+
+	return (
+		<FormGroup>
+			<Label>
+				<Input type={'radio'} {...input} onChange={() => {
+					if (values.company.email_main !== currentValue) {
+						input.onChange(currentValue);
+					}
+				}}
+				       disabled={disabled}
+				       checked={values.company.email_main === currentValue}
+
+				/> {' '}
+				{label}
+			</Label>
+			<p className="help-block">{touched && error && <span>{error}</span>}</p>
+		</FormGroup>
+	)
+};
+InputRadioCheckbox = connect(state => ({
+	values: getFormValues('FormRegister')(state),
+}))(InputRadioCheckbox);
+
 const renderSubFields = (member, index, fields) => {
 	return (
 		<div key={index}>
@@ -79,9 +90,10 @@ const renderSubFields = (member, index, fields) => {
 					/>
 				</div>
 				<Field
-					name={`${member}.is_main`}
-					component={InputCheckbox}
+					name={`email_main`}
+					component={InputRadioCheckbox}
 					type={"checkbox"}
+					currentValue={`${member}.is_main`}
 					label={'Желаемый вид связи'}
 				/>
 			</div>
@@ -106,4 +118,4 @@ const FormArrayEmail = (props) => {
 	);
 }
 
-export {FormArrayEmail};
+export { FormArrayEmail };

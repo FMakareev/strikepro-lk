@@ -30,7 +30,7 @@ export class CatalogProductRow extends Component {
     products: PropTypes.array,
     updateProduct: PropTypes.func,
     setStore: PropTypes.func,
-  }
+  };
 
 
   constructor(props) {
