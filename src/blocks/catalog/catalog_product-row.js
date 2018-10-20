@@ -100,7 +100,7 @@ export class CatalogProductRow extends Component {
 
   render() {
     const { product, shopping_cart: { order, load, error, success }, index} = this.props;
-    console.log(this.state);
+
     return (<tr>
       <td width="100">{product.id}</td>
       <td>{product.code}</td>
@@ -112,13 +112,13 @@ export class CatalogProductRow extends Component {
 			      smallImage: {
 				      alt: 'Wristwatch by Ted Baker London',
 				      isFluidWidth: false,
-              src: imageMock[index].small,
+              src: imageMock[index] && imageMock[index].small,
               width: this.state.smallImageWidth,
               height: this.state.smallImageHeight,
 			      },
 			      largeImage: {
 				      alt: '',
-              src: imageMock[index].big,
+              src: imageMock[index] && imageMock[index].big,
 				      width: 1200,
 				      height: 1800
 			      },
@@ -127,20 +127,21 @@ export class CatalogProductRow extends Component {
 
       </td>
       <td>{product.name}</td>
-      <td>{product.price.price}
+      <td>{product.price && product.price.price}
       </td>
       <td>{product.balance}</td>
       <td>{
         order &&
         <div className="product-quantity_wrapper">
           <div className="product-quantity_btn">
-            <button type="button" className="btn__control" onClick={this.removeProduct}>
+            <button disabled={load} type="button" className="btn__control" onClick={this.removeProduct}>
               <i className={"fa fa-minus"}/>
             </button>
           </div>
           <div className="product-quantity_input">
             <input
-              type="number"
+	            disabled={load}
+	            type="number"
               className="inp__control"
               name="quantity"
               value={product.count ? product.count : 0}
@@ -148,7 +149,7 @@ export class CatalogProductRow extends Component {
             />
           </div>
           <div className="product-quantity_btn">
-            <button type="button" className="btn__control" onClick={this.addProduct}>
+            <button  disabled={load} type="button" className="btn__control" onClick={this.addProduct}>
               <i className={"fa fa-plus"}/>
             </button>
           </div>
