@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {PageTitle} from "../../blocks/PageTitle/PageTitle";
 import './catalog.css';
-// import {CatalogFilter} from "../../blocks/catalog/catalog_filter";
 import {CatalogSidebar} from "../../blocks/catalog/catalog_sidebar";
 import {CatalogContent} from "../../blocks/catalog/catalog_content";
 import {CatalogShoppingCart} from "../../blocks/catalog/catalog_shopping-cart";
 import {Store} from '../../store/store';
 import {initShoppingCart} from "../../store/reducers/shopping_cart/actions";
 import {connect as connectRestEasy} from "@brigad/redux-rest-easy";
-import {CatalogAction, getCatalog, isCatalog} from "../../store/reduxRestEasy/catalog";
+import {getCatalog, isCatalog} from "../../store/reduxRestEasy/catalog";
 import {GetOrderAction} from "../../store/reduxRestEasy/order";
 
 
@@ -20,8 +18,6 @@ import {GetOrderAction} from "../../store/reduxRestEasy/order";
   }),
   dispatch => ({
     GetOrderAction: (urlParams) => dispatch(GetOrderAction({urlParams})),
-
-    CatalogAction: urlParams => dispatch(CatalogAction({urlParams})),
   })
 )
 export class Catalog extends Component {
@@ -54,8 +50,6 @@ export class Catalog extends Component {
   }
 
   render() {
-    const {sum, count} = this.state;
-    console.log(this.props);
     return (
       <div id="body-container" className="animsition dashboard-page">
         <PageTitle>
