@@ -1,6 +1,6 @@
 export const config = {
     api: {
-        baseUrl: 'http://new.strikepro.ru/api/v1/',
+        baseUrl: 'http://new.strikepro.ru',
 
         login:'auth/login',
         register: 'auth/register',

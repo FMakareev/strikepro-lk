@@ -6,12 +6,12 @@ import {LoginSchema} from "./schemas/LoginSchema";
 import {BrowserHistory} from "../../history";
 import handleStatusCode from "./networkHelpers/handleStatusCode";
 
-
+import {config } from '../../config';
 
 export const login = createResource('login', {cacheLifetime: 600})({
     login: {
         method: 'POST',
-        url: '/api/v1/auth/login',
+        url: `${config.api.baseUrl}/api/v1/auth/login`,
         afterHook: () => console.log('User login successfully'),
         normalizer: (response) => normalize(response, LoginSchema),
 
@@ -28,7 +28,7 @@ export const login = createResource('login', {cacheLifetime: 600})({
     },
     refreshToken: {
         method: 'POST',
-        url: '/api/v1/auth/refresh_token',
+        url: `${config.api.baseUrl}/api/v1/auth/refresh_token`,
         afterHook: () => console.log('refresh_token successfully'),
         normalizer: (response) => {
             console.log('normalize(response, LoginSchema): ', normalize(response, LoginSchema));
@@ -48,7 +48,7 @@ export const login = createResource('login', {cacheLifetime: 600})({
     },
     logOut: {
         method: 'GET',
-        url: '/api/v1/auth/logout',
+        url: `${config.api.baseUrl}/api/v1/auth/logout`,
         afterHook: () => {
             BrowserHistory.push('/login');
             localStorage.clear();

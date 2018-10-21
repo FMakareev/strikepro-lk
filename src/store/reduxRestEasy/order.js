@@ -2,6 +2,7 @@ import {createResource} from "@brigad/redux-rest-easy";
 import {getToken} from "./networkHelpers/getToken";
 import handleStatusCode from "./networkHelpers/handleStatusCode";
 import Jsona from 'jsona';
+import { config } from "../../config";
 const dataFormatter = new Jsona();
 
 
@@ -9,7 +10,7 @@ const dataFormatter = new Jsona();
 const orders = createResource('orders')({
   getOrders: {
     method: 'GET',
-    url: '/api/v1/orders',
+    url: `${config.api.baseUrl}/api/v1/orders`,
     afterHook: () => console.log('Get stores successfully'),
     normalizer: response => {
       console.log('getOrders response: ', response);
@@ -49,7 +50,7 @@ const orders = createResource('orders')({
   },
   getOrder: {
     method: 'GET',
-    url: '/api/v1/order/::id',
+    url: `${config.api.baseUrl}/api/v1/order/::id`,
     afterHook: () => console.log('Get stores successfully'),
     normalizer: response => {
       console.log('getOrders response: ', response);
@@ -87,7 +88,7 @@ const orders = createResource('orders')({
   },
   getProduct: {
     method: 'GET',
-    url: '/api/v1/order/::id',
+    url: `${config.api.baseUrl}/api/v1/order/::id`,
     networkHelpers: {
       getToken: getToken,
       handleStatusCode,
@@ -106,7 +107,7 @@ const orders = createResource('orders')({
   },
   createOrder: {
     method: 'POST',
-    url: '/api/v1/order',
+    url: `${config.api.baseUrl}/api/v1/order`,
     normalizer: response => {
       console.log('POST create response', response)
     },
@@ -130,7 +131,7 @@ const orders = createResource('orders')({
   },
   deleteOrder: {
     method: 'DELETE',
-    url: '/api/v1/order/::id',
+    url: `${config.api.baseUrl}/api/v1/order/::id`,
     networkHelpers: {
       getToken: getToken,
       handleStatusCode,
@@ -150,7 +151,7 @@ const orders = createResource('orders')({
   },
   updateOrder: {
     method: 'PUT',
-    url: '/api/v1/order',
+    url: `${config.api.baseUrl}/api/v1/order`,
     networkHelpers: {
       getToken: getToken,
       handleStatusCode,

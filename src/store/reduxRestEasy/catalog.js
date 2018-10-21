@@ -1,10 +1,11 @@
 import {createResource} from '@brigad/redux-rest-easy';
+import {config } from '../../config';
 
 
 export const Catalog = createResource('catalog', { cacheLifetime: 30 })({
     catalog: {
         method: 'GET',
-        url: '/api/v1/catalog::id',
+        url: `${config.api.baseUrl}/api/v1/catalog::id`,
         afterHook: () => console.log('Get carrier successfully'),
     },
 });

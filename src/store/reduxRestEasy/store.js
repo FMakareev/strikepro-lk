@@ -1,11 +1,12 @@
 import {createResource} from '@brigad/redux-rest-easy'
 import normalize from 'json-api-normalizer'
 import {getToken} from './networkHelpers/getToken'
+import { config } from "../../config";
 
 const store = createResource('store', {cacheLifetime: 0})({
     getStore: {
         method: 'GET',
-        url: '/api/v1/stores',
+        url: `${config.api.baseUrl}/api/v1/stores`,
         afterHook: () => console.log('Get stores successfully'),
         normalizer: response => {
             console.log('response', response);
@@ -51,12 +52,12 @@ const store = createResource('store', {cacheLifetime: 0})({
     },
     createStore: {
         method: 'POST',
-        url: '/api/v1/store/',
+        url: `${config.api.baseUrl}/api/v1/store/`,
         afterHook: () => console.log('POST stores successfully'),
         normalizer: response => {
-            console.log('PUT response', response)
-            let store = response
-            store.workinghours = JSON.parse(store.workinghours)
+            console.log('PUT response', response);
+            let store = response;
+            store.workinghours = JSON.parse(store.workinghours);
 
             let data = {
                 entities: {
@@ -65,8 +66,8 @@ const store = createResource('store', {cacheLifetime: 0})({
                     }
                 },
                 result: [store.id]
-            }
-            console.log('data', data)
+            };
+            console.log('data', data);
 
             return data
         },
@@ -89,7 +90,7 @@ const store = createResource('store', {cacheLifetime: 0})({
     },
     updateStore: {
         method: 'PUT',
-        url: '/api/v1/store/::id',
+        url: `${config.api.baseUrl}/api/v1/store/::id`,
         afterHook: () => console.log('PUT stores successfully'),
         normalizer: response => {
             console.log('PUT response', response)
@@ -126,7 +127,7 @@ const store = createResource('store', {cacheLifetime: 0})({
     },
     deleteStore: {
         method: 'DELETE',
-        url: '/api/v1/store/::id',
+        url: `${config.api.baseUrl}/api/v1/store/::id`,
         afterHook: (
             normalizedPayload,
             urlParams,
@@ -135,14 +136,14 @@ const store = createResource('store', {cacheLifetime: 0})({
             otherArgs,
             dispatch
         ) => {
-            console.log('DELETE stores normalizedPayload', normalizedPayload)
-            console.log('DELETE stores urlParams', urlParams)
-            console.log('DELETE stores query', query)
-            console.log('DELETE stores body', body)
-            console.log('DELETE stores otherArgs', otherArgs)
-            console.log('DELETE stores dispatch', dispatch)
-
-            console.log('DELETE stores successfully', arguments)
+            // console.log('DELETE stores normalizedPayload', normalizedPayload)
+            // console.log('DELETE stores urlParams', urlParams)
+            // console.log('DELETE stores query', query)
+            // console.log('DELETE stores body', body)
+            // console.log('DELETE stores otherArgs', otherArgs)
+            // console.log('DELETE stores dispatch', dispatch)
+            //
+            // console.log('DELETE stores successfully', arguments)
         },
         networkHelpers: {
             getToken: getToken,

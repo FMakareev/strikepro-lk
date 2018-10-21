@@ -1,11 +1,12 @@
 // users.js
 
 import {createResource} from '@brigad/redux-rest-easy';
+import { config } from "../../config";
 
 export const createUser = createResource('createUser')({
     register: {
         method: 'POST',
-        url: '/api/v1/auth/register',
+        url: `${config.api.baseUrl}/api/v1/auth/register`,
         afterHook: () => console.log('User create successfully'),
         networkHelpers: {
             requestPOST: (body) => ({

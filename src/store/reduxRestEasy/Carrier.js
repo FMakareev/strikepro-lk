@@ -1,11 +1,12 @@
 import {normalize} from "normalizr";
 import {createResource,} from '@brigad/redux-rest-easy';
 import {CarrierOptionsSchema} from "./schemas/CarrierOptionsSchema";
+import {config } from '../../config';
 
 export const CarrierOptions = createResource('options', {cacheLifetime: 30})({
     options: {
         method: 'GET',
-        url: '/api/v1/carrier/options',
+        url: `${config.api.baseUrl}/api/v1/carrier/options`,
         afterHook: () => console.log('Get carrier successfully'),
         normalizer: ({data}) => normalize(data, CarrierOptionsSchema),
 

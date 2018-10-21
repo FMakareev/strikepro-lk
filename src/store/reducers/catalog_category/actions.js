@@ -4,6 +4,7 @@ import {
 	GET_CATEGORY_ERROR, CHANGE_TREE,
 } from './action_types';
 import { getProducts } from "../catalog_products/actions";
+import { config } from "../../../config";
 // import { CatalogSidebar } from "../../../blocks/catalog/catalog_sidebar";
 // import DeepFind from 'deep_find';
 export const getCategory = (id) => {
@@ -13,7 +14,7 @@ export const getCategory = (id) => {
 		dispatch({type: GET_CATEGORY_LOAD, payload: true});
 
 		return new Promise((resolve, reject) => {
-			const url = `http://alex.taran.ru/api/v1/catalog${id ? id : ''}`;
+			const url = `${config.api.baseUrl}/api/v1/catalog${id ? id : ''}`;
 			fetch(url, {
 				method: 'GET',
 				credentials: 'include',
@@ -102,6 +103,7 @@ export const onToggle = (prevNode, toggled) => {
 		if (node.is_product === '0' && node.children && node.children.length === 0) {
 			dispatch(getCategory('/group/' + node.id))
 				.then((response) => {
+					console.log(`getCategory /group/${node.id}:`,response);
 					if ('data' in response && response.data.length) {
 						node.loading = false;
 						node.toggled = true;
@@ -116,7 +118,7 @@ export const onToggle = (prevNode, toggled) => {
 			node.active = true;
 
 			// dispatch({type: 'ARTICLES_URL', payload: `http://alex.taran.ru/api/v1/catalog/articles/${node.id}`});
-			dispatch(getProducts(`http://alex.taran.ru/api/v1/catalog/articles/${node.id}`));
+			dispatch(getProducts(`${config.api.baseUrl}/api/v1/catalog/articles/${node.id}`));
 			dispatch({type: CHANGE_TREE, payload: {cursor: node}});
 		} else {
 			dispatch({type: CHANGE_TREE, payload: {cursor: node}});
