@@ -69,6 +69,7 @@ export class FormRegister extends Component {
 		return {}
 	}
 
+
 	filterMainContact = (value, isMain) => {
 		let IsMain = isMain;
 		if(IsMain) {
