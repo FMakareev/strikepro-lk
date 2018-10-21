@@ -99,7 +99,6 @@ export const onToggle = (prevNode, toggled) => {
 		// console.log('CatalogSidebar onToggle', node);
 
 
-
 		if (node.is_product === '0' && node.children && node.children.length === 0) {
 			dispatch(getCategory('/group/' + node.id))
 				.then((response) => {
