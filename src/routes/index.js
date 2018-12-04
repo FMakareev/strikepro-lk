@@ -65,14 +65,14 @@ export class RouterWrapper extends Component {
             />
             <AuthRoute
               exact
-              path={'/register-success'}
+              path={'/register_success'}
               name={'Регистрация'}
               component={RegistrationSuccess}
             />
-            <AuthRoute exact path={'/password-reset'} name={'Сброс пароля'} component={PasswordReset} />
+            <AuthRoute exact path={'/password_reset'} name={'Сброс пароля'} component={PasswordReset} />
             <AuthRoute exact path={'/password_recovery'} name={'Восстановление пароля'} component={PasswordRecovery} />
-            <AuthRoute exact path='/login' name={'Вход'} component={Login} />
-            <AuthRoute exact path='/logout' name={'Выход'} component={Logout} />
+            <AuthRoute exact path={'/login'} name={'Вход'} component={Login} />
+            <AuthRoute exact path={'/logout'} name={'Выход'} component={Logout} />
 
             <MainRoute exact path='/' name={'Магазины'} component={Shops} />
             <MainRoute
@@ -111,12 +111,6 @@ export class RouterWrapper extends Component {
               path='/500'
               title={'500'}
               description={'Внутренняя ошибка сервера'}
-              component={InternalServerError}
-            />
-            <MainRoute
-              path='/404'
-              title={'404'}
-              description={'Страница не найдена'}
               component={InternalServerError}
             />
             <MainRoute

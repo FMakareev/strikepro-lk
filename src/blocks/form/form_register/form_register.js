@@ -131,10 +131,10 @@ export class FormRegister extends Component {
 				.then(response => {
 					console.log(response);
 					if (response.normalizedPayload) {
-						BrowserHistory.push('/register-success')
+						BrowserHistory.push('/register_success')
 					}
 					if (response.status >= 200 && response.status < 300) {
-						BrowserHistory.push('/register-success');
+						BrowserHistory.push('/register_success');
 
 						resolve(response)
 					} else if (response.status === 422) {

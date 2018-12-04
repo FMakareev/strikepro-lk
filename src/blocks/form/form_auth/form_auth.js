@@ -171,7 +171,7 @@ export class FormAuth extends Component {
 		      <Col sm={6} className={'text-xs-right'}>
 	          <Link
 		          to={{
-			          pathname: '/password-reset'
+			          pathname: '/password_reset'
 		          }}
 	          >
 		          Забыли пароль
