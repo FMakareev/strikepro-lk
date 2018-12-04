@@ -89,8 +89,8 @@ export class FormRegister extends Component {
 
 		console.log('transformValue: ', value);
 
-		value.company.email = this.filterMainContact(value.company.email, value.company.email_main);
-		value.company.phone = this.filterMainContact(value.company.phone, value.company.phone_main);
+		value.company.email = this.filterMainContact(value.company.email, value.company.contact_main);
+		value.company.phone = this.filterMainContact(value.company.phone, value.company.contact_main);
 
 
 
@@ -103,8 +103,8 @@ export class FormRegister extends Component {
 		if (value.company.email) {
 			delete value.company.email
 		}
-		if (value.company.email_main) {
-			delete value.company.email_main
+		if (value.company.contact_main) {
+			delete value.company.contact_main
 		}
 		if (value.company.phone) {
 			delete value.company.phone

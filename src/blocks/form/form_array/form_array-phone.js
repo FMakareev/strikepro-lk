@@ -20,12 +20,12 @@ export let InputRadioCheckbox = function ({input, label, type, disabled, meta: {
 		<FormGroup>
 			<Label>
 				<Input type={'radio'} {...input} onChange={() => {
-					if (values.company.phone_main !== currentValue) {
+					if (values.company.contact_main !== currentValue) {
 						input.onChange(currentValue);
 					}
 				}}
 				       disabled={disabled}
-				       checked={values.company.phone_main === currentValue}
+				       checked={values.company.contact_main === currentValue}
 
 				/> {' '}
 				{label}
@@ -75,7 +75,7 @@ const renderSubFields = (member, index, fields) => {
 
             <div className="form-inline">
 	            <Field
-		            name={`phone_main`}
+		            name={`contact_main`}
 		            component={InputRadioCheckbox}
 		            type={"checkbox"}
 		            currentValue={`${member}.is_main`}

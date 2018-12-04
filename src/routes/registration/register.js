@@ -41,7 +41,7 @@ class Register extends Component {
         if(this.state.type === 'legal_entity'){
             initialValues.company.nds = true;
         }
-	    initialValues.company.email_main = 'email[0].is_main';
+	    initialValues.company.contact_main = 'email[0].is_main';
 
 	    return (
             <FormRegister
